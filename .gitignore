@@ -6,3 +6,4 @@ public/dist
 *.log
 .env
 package-lock.json
+node_modules/.bin/ncp

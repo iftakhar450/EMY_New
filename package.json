@@ -2,7 +2,7 @@
 	"name": "emy",
 	"version": "1.0.0",
 	"scripts": {
-		"start": "node server.js"
+		"start": "node bin/www"
 	},
 	"dependencies": {
 		"async": "^2.6.1",
@@ -11,25 +11,26 @@
 		"ejs": "2.3.3",
 		"express": "4.13.4",
 		"jsonwebtoken": "^8.3.0",
+		"mysql": "^2.17.1",
+		"node-mysql-importer": "0.0.10",
+		"passport": "^0.4.0",
+		"passport-local": "^1.0.0",
 		"sails-mongo": "^1.0.1",
 		"sails-mysql": "0.12.2",
 		"waterline": "0.12.2"
-
 	},
 	"author": "iftakhar",
 	"license": "MIT",
-	"engines":{
-
-		"node":"8.9.1"
+	"engines": {
+		"node": "8.9.1"
 	},
-	"repository":{
-
-			"type":"git",
-			"url":"https://Iftakhar45@bitbucket.org/Iftakhar45/emy.git"
-
+	"repository": {
+		"type": "git",
+		"url": "https://Iftakhar45@bitbucket.org/Iftakhar45/emy.git"
 	},
-	
-
-	"keywords":["node" , "heroku", "express"]
-
+	"keywords": [
+		"node",
+		"heroku",
+		"express"
+	]
 }

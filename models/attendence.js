@@ -17,7 +17,6 @@ module.exports = {
 		sidename: 'string',
 		overtime: 'string',
 		attendent: 'string',			
-		
 		status: 'string',
 		date:'string'
 		////////creted date is also a primery key in this table

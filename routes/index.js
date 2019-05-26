@@ -4,7 +4,22 @@ module.exports = function (app, passport) {
         var users = require('./users');
         var projects = require('./projects');
 
+        
+            app.post('/login',function(req,res,next){
+                console.log('req.body',req.body)
+                next()
+            }, passport.authenticate('local'), function (req, res) {
+                res.header("Access-Control-Allow-Credentials", "true");
+                res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+                res.header("Pragma", "no-cache");
+                res.header("Expires", 0);
+                console.log('authenticated');
+                req.user.token = jwt.sign({
+                    data: req.user
+                }, 'que@xis', { expiresIn: 60 * 60 });
 
+                res.send(req.user);
+            });
         
          app.use('/atn', attendence);
         app.use('/projects', projects);

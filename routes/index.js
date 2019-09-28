@@ -1,3 +1,4 @@
+var jwt = require('jsonwebtoken');
 module.exports = function (app, passport) {
 
         var attendence = require('./attendence');
@@ -16,8 +17,9 @@ module.exports = function (app, passport) {
                 console.log('authenticated');
                 req.user.token = jwt.sign({
                     data: req.user
-                }, 'que@xis', { expiresIn: 60 * 60 });
-
+                }, 'emy@uae', { expiresIn: 60 * 60 });
+                //console.log(req.user.username);
+                //console.log(req.user.token);
                 res.send(req.user);
             });
         

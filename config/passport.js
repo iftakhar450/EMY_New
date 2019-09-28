@@ -29,12 +29,10 @@ module.exports = function (passport) {
         function (req, username, password, done) {
 
             //   db.all("SELECT * FROM users WHERE username = '"+username+"' AND endeffdt IS NULL", function(err, rows){
-            db.all("SELECT * FROM users WHERE username = '" + username + "'", function (err, rows) {
+            db.all("SELECT * FROM users WHERE eid = '" + username + "'", function (err, rows) {
                 if (err) {
                     return done(err);
                 }
-                console.log('rowwwwwwwwwwwwwwwwwwww');
-                console.log(rows[0]);
                 if (!rows.length) {
                     return done(null, false, "Failed");
                 }

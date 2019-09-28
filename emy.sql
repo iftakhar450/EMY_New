@@ -4,18 +4,27 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `rec_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `username` varchar(100) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `othername` varchar(200)character set utf8 NOT NULL,
+  `eid` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `translation` varchar(100) DEFAULT NULL,
-  `profession` varchar(100) DEFAULT NULL,
-  `admin` varchar(1) DEFAULT 'n',
+  `profession_id` varchar(10) DEFAULT NULL,
+   `department_id` varchar(10) DEFAULT NULL,
+  `isadmin` varchar(1) DEFAULT 'n',
   `supervisor_id` varchar(10) DEFAULT NULL,
   `mobile` varchar(100) DEFAULT NULL,
-  `status` varchar(50) DEFAULT NULL,
+  `home_mobile` varchar(100) DEFAULT NULL,
+  `isactive` varchar(1) DEFAULT 'y',
+   `isbouns_hour_apply` varchar(1) DEFAULT 'n',
+   `basic_salary` integer(10) DEFAULT 0,
+   `per_hour_rate` integer(10) DEFAULT 0,
+   `allowance_one` integer(10) DEFAULT 0,
+   `allowance_two` integer(10) DEFAULT 0,
+  `delete` varchar(1) DEFAULT 'n',
+  `extras` text DEFAULT NULL,
   PRIMARY KEY (`rec_id`),
   UNIQUE KEY `rec_id` (`rec_id`),
-  UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `eid` (`eid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
@@ -25,7 +34,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (3,'System Administrator','root','password','','profession','y','','09099090','');
+INSERT INTO `users`(`name`,`othername`,`eid`,`password`,`profession_id`,`isadmin`,`supervisor_id`,`mobile`,`isactive`,`delete`) VALUES ('System Administrator','منتظم','root','password','','y','','09099090','y','n');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -3,6 +3,9 @@ var express = require('express');
 var app=express();
 var bodyParser = require('body-parser')
 var passport = require('passport');
+var cors = require('cors')
+ 
+app.use(cors())
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 	extended: true
@@ -16,6 +19,7 @@ require('./config/database')().connect(function (err, connect) {
     }
 });
 require('./config/passport')(passport);
-app.use(express.static(__dirname + '/public'));             
+app.use(express.static(__dirname + '/public'));  
+app.use(passport.initialize());           
 module.exports = app;
 module.exports.passport = passport;

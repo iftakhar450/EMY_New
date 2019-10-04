@@ -1,31 +1,33 @@
 var jwt = require('jsonwebtoken');
 module.exports = function (app, passport) {
 
-        var attendence = require('./attendence');
-        var users = require('./users');
-        var projects = require('./projects');
+    var attendence = require('./attendence');
+    var users = require('./users');
+    var projects = require('./projects');
+    var settings = require('./settings');
 
-        
-            app.post('/login',function(req,res,next){
-                console.log('req.body',req.body)
-                next()
-            }, passport.authenticate('local'), function (req, res) {
-                res.header("Access-Control-Allow-Credentials", "true");
-                res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-                res.header("Pragma", "no-cache");
-                res.header("Expires", 0);
-                console.log('authenticated');
-                req.user.token = jwt.sign({
-                    data: req.user
-                }, 'emy@uae', { expiresIn: 60 * 60 });
-                //console.log(req.user.username);
-                //console.log(req.user.token);
-                res.send(req.user);
-            });
-        
-         app.use('/atn', attendence);
-        app.use('/projects', projects);
-        app.use('/users', users);
+
+    app.post('/login', function (req, res, next) {
+        console.log('req.body', req.body)
+        next()
+    }, passport.authenticate('local'), function (req, res) {
+        res.header("Access-Control-Allow-Credentials", "true");
+        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.header("Pragma", "no-cache");
+        res.header("Expires", 0);
+        console.log('authenticated');
+        req.user.token = jwt.sign({
+            data: req.user
+        }, 'emy@uae', { expiresIn: 60 * 60 });
+        //console.log(req.user.username);
+        //console.log(req.user.token);
+        res.send(req.user);
+    });
+
+    app.use('/atn', attendence);
+    app.use('/projects', projects);
+    app.use('/users', users);
+    app.use('/settings', settings);
     // catch 404 and forward to error handler
     // app.use(function (req, res, next) {
     //     var err = new Error('Not Found');

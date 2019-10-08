@@ -4,6 +4,7 @@ var http = require('http');
 var debug = require('debug')('Engine');
 var app = require('../server');
 var passport = require('../server').passport;
+
 //var redisConf = require('../config/redis');
 
 /**
@@ -16,6 +17,9 @@ app.set('port', port);
  * Create HTTP server.
  */
 var server = http.createServer(app);
+// var io = require('socket.io')(server);
+// var Events = require('../events');
+// var events = new Events(io);
 // server.listen(port,process.env.BIND_IP || null);
 app.listen(port, function() {
     console.log('app is running on http://localhost:' + port);

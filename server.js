@@ -10,6 +10,10 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 	extended: true
 })); 
+// var http = require('http').Server(app);
+// var io = require('socket.io')(http);
+//  var Events = require('./events');
+//  var events = new Events(io);
 // my sql connection
 require('./config/database')().connect(function (err, connect) {
     if (err) {
@@ -19,6 +23,8 @@ require('./config/database')().connect(function (err, connect) {
     }
 });
 require('./config/passport')(passport);
+
+
 app.use(express.static(__dirname + '/public'));  
 app.use(passport.initialize());           
 module.exports = app;

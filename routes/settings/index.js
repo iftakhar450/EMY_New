@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-depController = require('./departmentController');
-professionController = require('./professionsController');
 
+module.exports = function apiRoutes(event) {
+var depController = require('./departmentController')(event);
+var professionController = require('./professionsController')(event);
+// var occupy=require('./occupy')(event)
 var auth = function authMiddleware(req, res, next){
     // if (!req.isAuthenticated())
     // // res.send(401);
@@ -32,4 +34,6 @@ router.post('/addProfession',auth, professionController.createNewProfession);
 router.post('/deleteProfession',auth, professionController.deleteProfession);
 router.post('/updateProfession',auth, professionController.updateProfession);
 
-module.exports = router;
+return router
+};
+// module.exports = router;

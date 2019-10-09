@@ -2,7 +2,7 @@
 	"name": "emy",
 	"version": "1.0.0",
 	"scripts": {
-		"start": "node bin/www"
+		"start": "node server"
 	},
 	"dependencies": {
 		"async": "^2.6.1",

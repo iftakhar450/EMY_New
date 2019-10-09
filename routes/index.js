@@ -1,11 +1,12 @@
 var jwt = require('jsonwebtoken');
-module.exports = function (app, passport) {
+module.exports = function (app, passport,event) {
 
     var attendence = require('./attendence');
     var users = require('./users');
     var projects = require('./projects');
-    var settings = require('./settings');
-
+    var settings = require('./settings')(event);
+// console.log('000000000000000000000');
+// console.log(event);
 
     app.post('/login', function (req, res, next) {
         console.log('req.body', req.body)

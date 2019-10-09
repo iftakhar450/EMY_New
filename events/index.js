@@ -3,10 +3,13 @@
  */
 
 var events = require('events');
+var socket = require('../config/sockets');
+// var events  = require('../config/events');
+
 var Events = function (io) {
     var self = this;
     this.io = io;
-    this.io.of('/main').on('connection', function (socket) {
+    this.io.of(socket.socket_main).on('connection', function (socket) {
         console.log('user connected');
         socket.on('subscribe', function (data) {
             console.log('socket subscribe');
@@ -18,6 +21,11 @@ var Events = function (io) {
         socket.on('test', function (msg) {
             console.log('I received ', msg);
           });
+    });
+
+    this.on('depUpdate', function () {
+        console.log('depupdatd ');
+        self.io.of(socket.socket_main).emit('depUpdate');
     });
 };
 Events.prototype = Object.create(events.EventEmitter.prototype);

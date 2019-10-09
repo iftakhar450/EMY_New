@@ -1,14 +1,10 @@
 var config = require('./../../config');
 var db = config.database();
 
-module.exports.getAllDepartments = function getAllDepartments(req, res) {
+module.exports = function apiRoutes(event) { 
+var api = {};
+api.getAllDepartments = function(req,res,next) {
     var sql = '';
-    // if(req.body.status && req.body.status=='active') {
-    //      sql = "SELECT * FROM department where `delete`='n' and `status`='active' ";
-    // } 
-    // else{
-        //  sql = "SELECT * FROM department where `delete`='n'";
-    // }
     sql = "SELECT * FROM department where `delete`='n'";
     db.all(sql, function (err, rows) {
         if (err) {
@@ -18,11 +14,9 @@ module.exports.getAllDepartments = function getAllDepartments(req, res) {
         return res.send(rows);
     });
 
-};
-module.exports.createNewDepartment = function createNewDeparment(req, res) {
-    console.log(req.body);
-
-    sql = 'INSERT INTO department(`name`,`extras`) ' + 
+}
+api.createNewDepartment = function(req,res,next) {
+  var   sql = 'INSERT INTO department(`name`,`extras`) ' + 
     'VALUES (?, ?)';
     var data = [
         req.body.name,
@@ -36,12 +30,11 @@ module.exports.createNewDepartment = function createNewDeparment(req, res) {
             //  req.log.error(err);
             return res.status(500).json({ error: err });
         }
+        event.emit('depUpdate');
         return res.status(200).json({ msg: 'Department Add Successfully' });
     });
-
-};
-module.exports.deleteDeparment = function deleteDeparment(req, res) {
-
+}
+api.deleteDeparment = function(req,res,next) {
     var sql = "UPDATE `department` SET `delete` = 'y' where rec_id=" + req.body.depId;
     db.run(sql, function (err) {
         if (err) {
@@ -51,8 +44,8 @@ module.exports.deleteDeparment = function deleteDeparment(req, res) {
         }
         return res.status(200).json({ msg: 'Deparment Deleted successfully' });
     });
-};
-module.exports.updateDepartment = function updateDepartment(req, res) {
+}
+api.updateDepartment = function(req,res,next) {
     var sql = "UPDATE `department` SET `name` = '"+req.body.name+"' where rec_id=" + req.body.rec_id;
     db.run(sql, function (err) {
         if (err) {
@@ -62,5 +55,8 @@ module.exports.updateDepartment = function updateDepartment(req, res) {
         }
         return res.status(200).json({ msg: 'Deparment Update successfully' });
     });
+}
+return api;
+}
 
-};
+

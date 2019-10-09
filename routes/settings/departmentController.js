@@ -1,6 +1,6 @@
 var config = require('./../../config');
 var db = config.database();
-
+var allevents  =  require('./../../config/events');
 module.exports = function apiRoutes(event) { 
 var api = {};
 api.getAllDepartments = function(req,res,next) {
@@ -30,7 +30,7 @@ api.createNewDepartment = function(req,res,next) {
             //  req.log.error(err);
             return res.status(500).json({ error: err });
         }
-        event.emit('depUpdate');
+        event.emit(allevents.departmentUpdate);
         return res.status(200).json({ msg: 'Department Add Successfully' });
     });
 }
@@ -42,6 +42,7 @@ api.deleteDeparment = function(req,res,next) {
             //  req.log.error(err);
             return res.status(500).json({ error: err });
         }
+        event.emit(allevents.departmentUpdate);
         return res.status(200).json({ msg: 'Deparment Deleted successfully' });
     });
 }
@@ -53,6 +54,7 @@ api.updateDepartment = function(req,res,next) {
             //  req.log.error(err);
             return res.status(500).json({ error: err });
         }
+        event.emit(allevents.departmentUpdate);
         return res.status(200).json({ msg: 'Deparment Update successfully' });
     });
 }

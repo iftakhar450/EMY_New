@@ -31,8 +31,6 @@ require('./config/database')().connect(function (err, connect) {
 });
 
 
-require('./config/passport')(passport);
-require('./routes')(app, passport, events);
 
 
 
@@ -40,6 +38,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(passport.initialize());
 
 
+require('./config/passport')(passport);
+require('./routes')(app, passport, events);
 /**
  * Normalize a port into a number, string, or false.
  */

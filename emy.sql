@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `rec_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
-  `othername` varchar(200)character set utf8 NOT NULL,
+  `othername` varchar(200)character set utf8  NULL,
   `eid` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `profession_id` varchar(10) DEFAULT NULL,

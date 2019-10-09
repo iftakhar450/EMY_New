@@ -10,10 +10,10 @@ var auth = function authMiddleware(req, res, next){
     //     return res.status(403).json({error: 'Invalid User'});
     // else
     //     next();
-    if (!req.body.token || req.body.token == '')
-    // res.send(401);
-    return res.status(403).json({ msg: 'Invalid User' });
-    else
+    // if (!req.body.token || req.body.token == '')
+    // // res.send(401);
+    // return res.status(403).json({ msg: 'Invalid User' });
+    // else
         next();
 };
 router.post('/getAllUser',auth,userController.getAllUser);

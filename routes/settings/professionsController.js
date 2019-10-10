@@ -13,7 +13,7 @@ module.exports = function apiRoutes(event) {
         // else{
         //  sql = "SELECT * FROM department where `delete`='n'";
         // }
-        sql = "SELECT * FROM profession where `delete`='n'";
+        sql = "SELECT * FROM profession where `isdelete`='n'";
         db.all(sql, function (err, rows) {
             if (err) {
                 req.log.error(err);
@@ -48,7 +48,7 @@ module.exports = function apiRoutes(event) {
 
     api.deleteProfession = function (req, res, next) {
 
-        var sql = "UPDATE `profession` SET `delete` = 'y' where rec_id=" + req.body.depId;
+        var sql = "UPDATE `profession` SET `isdelete` = 'y' where rec_id=" + req.body.depId;
         db.run(sql, function (err) {
             if (err) {
                 console.log(err);

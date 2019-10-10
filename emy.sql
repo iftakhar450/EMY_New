@@ -20,7 +20,7 @@ CREATE TABLE `users` (
    `per_hour_rate` integer(10) DEFAULT 0,
    `allowance_one` integer(10) DEFAULT 0,
    `allowance_two` integer(10) DEFAULT 0,
-  `delete` varchar(1) DEFAULT 'n',
+  `isdelete` varchar(1) DEFAULT 'n',
   `extras` text DEFAULT NULL,
   PRIMARY KEY (`rec_id`),
   UNIQUE KEY `rec_id` (`rec_id`),
@@ -34,7 +34,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users`(`name`,`othername`,`eid`,`password`,`profession_id`,`isadmin`,`supervisor_id`,`mobile`,`isactive`,`delete`) VALUES ('System Administrator','منتظم','root','password','','y','','09099090','y','n');
+INSERT INTO `users`(`name`,`othername`,`eid`,`password`,`profession_id`,`isadmin`,`supervisor_id`,`mobile`,`isactive`,`isdelete`) VALUES ('System Administrator','منتظم','root','password','','y','','09099090','y','n');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,7 +50,7 @@ CREATE TABLE `projects` (
    `sector` varchar(100) DEFAULT NULL,
   `supervisor_id` varchar(10) DEFAULT NULL,
     `status` varchar(50) DEFAULT NULL,
-     `delete` varchar(1) DEFAULT 'n',
+     `isdelete` varchar(1) DEFAULT 'n',
   PRIMARY KEY (`rec_id`),
   UNIQUE KEY `rec_id` (`rec_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -77,7 +77,7 @@ CREATE TABLE `attendence` (
   `supervisor_id` varchar(10) DEFAULT NULL,
     `status` varchar(50) DEFAULT NULL,
     `extras` text DEFAULT NULL,
-     `delete` varchar(1) DEFAULT 'n',
+     `isdelete` varchar(1) DEFAULT 'n',
   PRIMARY KEY (`rec_id`),
   UNIQUE KEY `rec_id` (`rec_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -100,7 +100,7 @@ CREATE TABLE `department` (
   `rec_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `extras` text DEFAULT NULL,
-   `delete` varchar(1) DEFAULT 'n',
+   `isdelete` varchar(1) DEFAULT 'n',
   PRIMARY KEY (`rec_id`),
   UNIQUE KEY `rec_id` (`rec_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -124,7 +124,7 @@ CREATE TABLE `profession` (
   `name` varchar(100) NOT NULL,
   `dep_id` varchar(10)  NULL,
   `extras` text DEFAULT NULL,
-   `delete` varchar(1) DEFAULT 'n',
+   `isdelete` varchar(1) DEFAULT 'n',
   PRIMARY KEY (`rec_id`),
   UNIQUE KEY `rec_id` (`rec_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;

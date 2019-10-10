@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 module.exports = function (app, passport,event) {
 
     var attendence = require('./attendence');
-    var users = require('./users');
+    var users = require('./users')(event);
     var projects = require('./projects');
     var settings = require('./settings')(event);
 // console.log('000000000000000000000');

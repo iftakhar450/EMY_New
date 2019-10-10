@@ -1,11 +1,12 @@
 var config = require('./../../config');
 var db = config.database();
 var allevents  =  require('./../../config/events');
+
 module.exports = function apiRoutes(event) { 
 var api = {};
 api.getAllDepartments = function(req,res,next) {
     var sql = '';
-    sql = "SELECT * FROM department where `delete`='n'";
+    sql = "SELECT * FROM department where `isdelete`='n'";
     db.all(sql, function (err, rows) {
         if (err) {
             req.log.error(err);
@@ -35,7 +36,7 @@ api.createNewDepartment = function(req,res,next) {
     });
 }
 api.deleteDeparment = function(req,res,next) {
-    var sql = "UPDATE `department` SET `delete` = 'y' where rec_id=" + req.body.depId;
+    var sql = "UPDATE `department` SET `isdelete` = 'y' where rec_id=" + req.body.depId;
     db.run(sql, function (err) {
         if (err) {
             console.log(err);

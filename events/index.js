@@ -4,12 +4,12 @@
 
 var events = require('events');
 var socket = require('../config/sockets');
- var allevents  = require('../config/events');
+var allevents = require('../config/events');
 
 var Events = function (io) {
     var self = this;
     this.io = io;
-   
+
     this.io.of(socket.socket_main).on('connection', function (socket) {
         console.log('user connected');
         socket.on('subscribe', function (data) {
@@ -19,12 +19,18 @@ var Events = function (io) {
         socket.on('disconnect', function () {
             console.log('socket disconnected');
         });
-        
-    });
 
+    });
+    // department update
     this.on(allevents.departmentUpdate, function () {
         self.io.of(socket.socket_main).emit(allevents.departmentUpdate);
     });
+    // employees update
+    this.on(allevents.empUpdate, function () {
+        self.io.of(socket.socket_main).emit(allevents.empUpdate);
+    });
+
+
 };
 Events.prototype = Object.create(events.EventEmitter.prototype);
 module.exports = Events;

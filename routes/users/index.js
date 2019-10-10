@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var userController =require('./userController');
+
+module.exports = function apiRoutes(event) {
+var userController =require('./userController')(event);
 
 
 // authentication of user before calling the api
@@ -21,4 +23,6 @@ router.post('/getAllUser',auth,userController.getAllUser);
 router.post('/createNewUser',auth,userController.createNewUser);
 router.post('/deleteUser',auth,userController.deleteUser);
 router.post('/updateUser',auth,userController.updateUser);
-module.exports = router;
+return router;
+}
+// module.exports = router;

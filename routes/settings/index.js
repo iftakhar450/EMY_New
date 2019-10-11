@@ -5,6 +5,7 @@ var router = express.Router();
 module.exports = function apiRoutes(event) {
 var depController = require('./departmentController')(event);
 var professionController = require('./professionsController')(event);
+var worknatureController = require('./worknaturesController')(event);
 // var occupy=require('./occupy')(event)
 var auth = function authMiddleware(req, res, next){
     // if (!req.isAuthenticated())
@@ -33,7 +34,11 @@ router.get('/getAllProfession',auth, professionController.getAllProfession);
 router.post('/addProfession',auth, professionController.createNewProfession);
 router.post('/deleteProfession',auth, professionController.deleteProfession);
 router.post('/updateProfession',auth, professionController.updateProfession);
-
+// worknatures routes
+router.get('/getAllWorknatures',auth, worknatureController.getAllWorknatures);
+router.post('/addWorknature',auth, worknatureController.createWorkNature);
+router.post('/deleteWorknature',auth, worknatureController.deleteWorkNature);
+router.post('/updateWorknature',auth, worknatureController.updateWorkNature);
 return router
 };
 // module.exports = router;

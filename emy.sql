@@ -134,7 +134,30 @@ CREATE TABLE `profession` (
 --
 
 
-LOCK TABLES `profession` WRITE;
+LOCK TABLES `worknatures` WRITE;
+/*!40000 ALTER TABLE `attendence` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attendence` ENABLE KEYS */;
+UNLOCK TABLES;
+-- worknatures table
+DROP TABLE IF EXISTS `worknatures`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `worknatures` (
+  `rec_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `translation` text character set utf8  DEFAULT NULL,
+  `extras` text DEFAULT NULL,
+   `isdelete` varchar(1) DEFAULT 'n',
+  PRIMARY KEY (`rec_id`),
+  UNIQUE KEY `rec_id` (`rec_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `attendence`
+--
+
+
+LOCK TABLES `worknatures` WRITE;
 /*!40000 ALTER TABLE `attendence` DISABLE KEYS */;
 /*!40000 ALTER TABLE `attendence` ENABLE KEYS */;
 UNLOCK TABLES;

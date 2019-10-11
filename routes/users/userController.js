@@ -15,7 +15,7 @@ module.exports = function apiRoutes(event) {
 
         db.all(sql, function (err, rows) {
             if (err) {
-                req.log.error(err);
+              //  req.log.error(err);
                 return next(err);
             }
             return res.send(rows);

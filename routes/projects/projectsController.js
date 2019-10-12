@@ -1,0 +1,74 @@
+var config = require('./../../config');
+var db = config.database();
+var allevents = require('./../../config/events');
+var moment = require('moment');
+module.exports = function apiRoutes(event) {
+    var api = {};
+    api.getAllProjects = function (req, res, next) {
+        var sql = '';
+        sql = "SELECT * FROM projects where `isdelete`='n'";
+        db.all(sql, function (err, rows) {
+            if (err) {
+                req.log.error(err);
+                return next(err);
+            }
+            return res.send(rows);
+        });
+
+    }
+    api.createNewProject = function (req, res, next) {
+        console.log(typeof new Date(req.body.startDate));
+        var date = new Date();
+        var sql = 'INSERT INTO projects(`sid`,`name`,`status`,`translation`,`area`,`location`,`startDate`,`endData`, `extras`) ' +
+            'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        var data = [
+            req.body.sid,
+            req.body.fullname,
+            req.body.status,
+            req.body.othername,
+            req.body.area,
+            req.body.location,
+            date,
+            req.body.endDate,
+            req.body.extras ? req.body.extras : null
+        ];
+
+        //req.log.debug(sql);
+        db.run(sql, data, function (err) {
+            if (err) {
+                console.log(err);
+                //  req.log.error(err);
+                return res.status(500).json({ error: err });
+            }
+            event.emit(allevents.departmentUpdate);
+            return res.status(200).json({ msg: 'Project Add Successfully' });
+        });
+    }
+    api.deleteProject = function (req, res, next) {
+        var sql = "UPDATE `projects` SET `isdelete` = 'y' where rec_id=" + req.body.depId;
+        db.run(sql, function (err) {
+            if (err) {
+                console.log(err);
+                //  req.log.error(err);
+                return res.status(500).json({ error: err });
+            }
+            event.emit(allevents.departmentUpdate);
+            return res.status(200).json({ msg: 'Project Deleted successfully' });
+        });
+    }
+    api.updateProject = function (req, res, next) {
+        var sql = "UPDATE `projects` SET `name` = '" + req.body.name + "' where rec_id=" + req.body.rec_id;
+        db.run(sql, function (err) {
+            if (err) {
+                console.log(err);
+                //  req.log.error(err);
+                return res.status(500).json({ error: err });
+            }
+            event.emit(allevents.departmentUpdate);
+            return res.status(200).json({ msg: 'Project Update successfully' });
+        });
+    }
+    return api;
+}
+
+

@@ -29,6 +29,10 @@ var Events = function (io) {
     this.on(allevents.empUpdate, function () {
         self.io.of(socket.socket_main).emit(allevents.empUpdate);
     });
+      // worknature update
+      this.on(allevents.workNatureUpdate, function () {
+        self.io.of(socket.socket_main).emit(allevents.workNatureUpdate);
+    });
 
 
 };

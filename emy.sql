@@ -38,34 +38,6 @@ INSERT INTO `users`(`name`,`othername`,`eid`,`password`,`profession_id`,`isadmin
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-DROP TABLE IF EXISTS `projects`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `projects` (
-  `rec_id` int(11) NOT NULL AUTO_INCREMENT,
-  `owner_name` varchar(100) NOT NULL,
-  `translation` varchar(100) DEFAULT NULL,
-  `plot` varchar(100) DEFAULT NULL,
-   `sector` varchar(100) DEFAULT NULL,
-  `supervisor_id` varchar(10) DEFAULT NULL,
-    `status` varchar(50) DEFAULT NULL,
-     `isdelete` varchar(1) DEFAULT 'n',
-  PRIMARY KEY (`rec_id`),
-  UNIQUE KEY `rec_id` (`rec_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
---
--- Dumping data for table `projects`
---
-
-
-LOCK TABLES `projects` WRITE;
-/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 DROP TABLE IF EXISTS `attendence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -153,11 +125,36 @@ CREATE TABLE `worknatures` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
--- Dumping data for table `attendence`
+-- Dumping data for table `worknatures`
 --
 
 
 LOCK TABLES `worknatures` WRITE;
-/*!40000 ALTER TABLE `attendence` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attendence` ENABLE KEYS */;
+/*!40000 ALTER TABLE `worknatures` DISABLE KEYS */;
+/*!40000 ALTER TABLE `worknatures` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- projects table
+DROP TABLE IF EXISTS `projects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `projects` (
+  `rec_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+   `status` varchar(100) NOT NULL,
+   `translation` text character set utf8,
+  `area` varchar(100) NOT NULL,
+  `location` varchar(100) NOT NULL,
+ `startDate` TIMESTAMP NOT NULL,
+ `endData` text  DEFAULT NULL,
+  `extras` text DEFAULT NULL,
+   `isactive` varchar(1) DEFAULT 'y',
+   `isdelete` varchar(1) DEFAULT 'n',
+  PRIMARY KEY (`rec_id`),
+  UNIQUE KEY `rec_id` (`rec_id`,`sid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
+-- Dumping data for table `projects`
+--

@@ -17,9 +17,10 @@ module.exports = function apiRoutes(event) {
 
     }
     api.createNewProject = function (req, res, next) {
-        console.log(typeof new Date(req.body.startDate));
-        var date = new Date();
-        var sql = 'INSERT INTO projects(`sid`,`name`,`status`,`translation`,`area`,`location`,`startDate`,`endData`, `extras`) ' +
+        var sdate = moment(req.body.startDate).format("YYYY-MM-DD HH:MM:SS");
+        var edate = moment(req.body.endDate).format("YYYY-MM-DD HH:MM:SS");
+        //   console.log(date);
+        var sql = 'INSERT INTO projects(`sid`,`name`,`status`,`translation`,`area`,`location`,`startDate`,`endDate`, `extras`) ' +
             'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
         var data = [
             req.body.sid,
@@ -28,11 +29,11 @@ module.exports = function apiRoutes(event) {
             req.body.othername,
             req.body.area,
             req.body.location,
-            date,
-            req.body.endDate,
+            sdate,
+            edate,
             req.body.extras ? req.body.extras : null
         ];
-
+        // console.log(sql)
         //req.log.debug(sql);
         db.run(sql, data, function (err) {
             if (err) {

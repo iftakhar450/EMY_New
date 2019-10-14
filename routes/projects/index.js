@@ -15,10 +15,13 @@ module.exports = function apiRoutes(event) {
             if (err) {
                 return res.status(403).json({ error: 'Invalid Token' });
             }
-            console.log(decoded)
+            // console.log(decoded)
             // req.user = decoded.data
+           
             next()
         });
+        // var decoded = jwt.decode(req.headers['authorization']);
+        // console.log(decoded);
         // jwt.verify(req.body.authorization, function(err, decoded) {
         //     console.log(decoded) // bar
         //     next();

@@ -40,6 +40,23 @@ INSERT INTO `users`(`name`,`othername`,`eid`,`password`,`profession_id`,`isadmin
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+DROP TABLE IF EXISTS `users_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users_tokens` (
+  `rec_id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(200) NOT NULL,
+   `token` text DEFAULT NULL,
+   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`rec_id`),
+  UNIQUE KEY `rec_id` (`rec_id`),
+  UNIQUE KEY `uid` (`uid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+
 DROP TABLE IF EXISTS `attendence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

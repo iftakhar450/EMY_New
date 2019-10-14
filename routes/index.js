@@ -23,20 +23,23 @@ module.exports = function (app, passport, event) {
         req.user.token = jwt.sign({
             data: req.user
         }, 'emy@uae', { expiresIn: 60 * 60 });
-        var sql = 'INSERT INTO users_tokens(`uid`,`token`) ' +
-            'VALUES ("'+req.body.username+'", "'+req.user.token+'") ON DUPLICATE KEY UPDATE  token="'+req.user.token+'"';
-        db.run(sql, function (err) {
-            if (err) {
-                console.log(err);
-                //  req.log.error(err);
-                return res.status(500).json({ error: err });
-            }
-            res.send(req.user);
-            // return res.status(200).json({ msg: 'Department Add Successfully' });
-        });
-        // res.send(req.user);
+        // var sql = 'INSERT INTO users_tokens(`uid`,`token`) ' +
+        //     'VALUES ("'+req.body.username+'", "'+req.user.token+'") ON DUPLICATE KEY UPDATE  token="'+req.user.token+'"';
+        // db.run(sql, function (err) {
+        //     if (err) {
+        //         console.log(err);
+        //         //  req.log.error(err);
+        //         return res.status(500).json({ error: err });
+        //     }
+        //     res.send(req.user);
+        //     // return res.status(200).json({ msg: 'Department Add Successfully' });
+        // });
+         res.send(req.user);
     });
 
+
+
+    
     app.use('/atn', attendence);
     app.use('/projects', projects);
     app.use('/users', users);

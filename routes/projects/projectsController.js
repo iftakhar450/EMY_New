@@ -17,9 +17,8 @@ module.exports = function apiRoutes(event) {
 
     }
     api.createNewProject = function (req, res, next) {
-        var sdate = moment(req.body.startDate).format("YYYY-MM-DD HH:MM:SS");
-        var edate = moment(req.body.endDate).format("YYYY-MM-DD HH:MM:SS");
-        //   console.log(date);
+        var sdate = moment(req.body.startDate).format('YYYY-MM-DD');
+        var edate = moment(req.body.endDate).format("YYYY-MM-DD");
         var sql = 'INSERT INTO projects(`sid`,`name`,`status`,`translation`,`area`,`location`,`startDate`,`endDate`, `extras`) ' +
             'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
         var data = [
@@ -37,9 +36,11 @@ module.exports = function apiRoutes(event) {
         //req.log.debug(sql);
         db.run(sql, data, function (err) {
             if (err) {
-                console.log(err);
-                //  req.log.error(err);
-                return res.status(500).json({ error: err });
+                if (err.sqlMessage) {
+                    return res.status(500).json({ msg: err.sqlMessage });
+                } else {
+                    return res.status(500).json({ error: err });
+                }
             }
             event.emit(allevents.departmentUpdate);
             return res.status(200).json({ msg: 'Project Add Successfully' });
@@ -53,28 +54,39 @@ module.exports = function apiRoutes(event) {
                 //  req.log.error(err);
                 return res.status(500).json({ error: err });
             }
-            event.emit(allevents.departmentUpdate);
+            event.emit(allevents.projectUpdate);
             return res.status(200).json({ msg: 'Project Deleted successfully' });
         });
     }
     api.updateProject = function (req, res, next) {
         // var sql = 'UPDATE projects SET status="hold" WHERE tokens.token_no="' + token + '" AND tokens.status="process" ' +
         //     'AND tokens.counter_id=' + req.counter.id;
-        if(req.body.extras) {
-            var sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
-            ', `status` = "' + req.body.status + '" `translation` = "' + req.body.othername + '" ' +
+        console.log('000000000000000');
+        console.log(req.body.extras);
+        console.log(typeof req.body.extras);
+        console.log('000000000000000');
+        var sdate = moment(req.body.startDate).format("YYYY-MM-DD");
+        var edate = moment(req.body.endDate).format("YYYY-MM-DD");
+        var sql = '';
+        if (req.body.extras) {
+            // var sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
+            //     ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
+            //     ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
+            //     ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '" ' +
+            //     ', `extras` = "' + req.body.extras + '" where rec_id=' + req.body.rec_id;
+             sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
+            ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
             ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
-            ', `startDate` = "' + req.body.startDate + '", `endDate` = "' + req.body.endDate + '" ' +
-            ', `extras` = "' + req.body.extras + '" where rec_id=' + req.body.rec_id;
-        } else {
-            var sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
-            ', `status` = "' + req.body.status + '" `translation` = "' + req.body.othername + '" ' +
-            // ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
-            // ', `startDate` = "' + req.body.startDate + '", `endDate` = "' + req.body.endDate + '" ' +
+            ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '", `extras`= "'+req.body.extras+'"' +
             'where rec_id=' + req.body.rec_id;
+        } else {
+             sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
+                ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
+                ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
+                ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '" ' +
+                'where rec_id=' + req.body.rec_id;
         }
-      
-        console.log(sql);
+
         db.run(sql, function (err) {
             if (err) {
                 console.log(err);

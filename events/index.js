@@ -33,6 +33,10 @@ var Events = function (io) {
       this.on(allevents.workNatureUpdate, function () {
         self.io.of(socket.socket_main).emit(allevents.workNatureUpdate);
     });
+     // project update
+     this.on(allevents.projectUpdate, function () {
+        self.io.of(socket.socket_main).emit(allevents.projectUpdate);
+    });
 
 
 };

@@ -1,6 +1,6 @@
 var config = require('./../../config');
 var db = config.database();
-var allevents  =  require('./../../config/events');
+var allevents = require('./../../config/events');
 module.exports = function apiRoutes(event) {
     var api = {};
     api.getAllUser = function (req, res, next) {
@@ -15,7 +15,7 @@ module.exports = function apiRoutes(event) {
 
         db.all(sql, function (err, rows) {
             if (err) {
-              //  req.log.error(err);
+                //  req.log.error(err);
                 return next(err);
             }
             return res.send(rows);
@@ -23,7 +23,7 @@ module.exports = function apiRoutes(event) {
 
     }
     api.createNewUser = function (req, res, next) {
-        console.log(req.body);
+        // console.log(req.body);
 
         sql = 'INSERT INTO users(`name`,`othername`, `eid`,`password`,`profession_id`,`department_id`,`isadmin`,`supervisor_id`,`mobile`,`home_mobile`,`isactive`,`isbouns_hour_apply`,`basic_salary`,`per_hour_rate`,`allowance_one`,`allowance_two`,`extras`) ' +
             'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -50,9 +50,11 @@ module.exports = function apiRoutes(event) {
         //req.log.debug(sql);
         db.run(sql, data, function (err) {
             if (err) {
-                console.log(err);
-                //  req.log.error(err);
-                return res.status(500).json({ error: err });
+                if (err.sqlMessage) {
+                    return res.status(500).json({ msg: err.sqlMessage });
+                } else {
+                    return res.status(500).json({ error: err });
+                }
             }
             return res.status(200).json({ msg: 'user add successfully' });
         });
@@ -62,7 +64,6 @@ module.exports = function apiRoutes(event) {
         db.run(sql, function (err) {
             if (err) {
                 console.log(err);
-                //  req.log.error(err);
                 return res.status(500).json({ error: err });
             }
             event.emit(allevents.departmentUpdate);

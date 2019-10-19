@@ -9,7 +9,17 @@ module.exports = function apiRoutes(event) {
             sql = "SELECT * FROM users where `isdelete`='n' and `status`='active' ";
         }
         else {
-            sql = "SELECT users.*,department.name as depName, profession.name as profName FROM emy.users LEFT JOIN emy.department ON department.rec_id = users.department_id LEFT JOIN emy.profession ON profession.rec_id = users.profession_id where users.isdelete = 'n'";
+            // sql = "SELECT users.*,department.name as depName, profession.name as profName \
+            // FROM emy.users LEFT JOIN emy.department ON department.rec_id = users.department_id \
+            // LEFT JOIN emy.profession ON profession.rec_id = users.profession_id \
+            // where users.isdelete = 'n'";
+          sql =   "SELECT users.*,department.name as depName, profession.name as profName, \
+          GROUP_CONCAT(projects.sid ,'-',projects.name) as projects  FROM emy.users\
+            LEFT JOIN emy.department ON department.rec_id = users.department_id \
+            LEFT JOIN emy.profession ON profession.rec_id = users.profession_id\
+            LEFT JOIN emy.projects ON FIND_IN_SET(projects.rec_id, users.project_ids) != 0\
+            where users.isdelete = 'n'\
+            group by users.rec_id"
             //  sql = "SELECT * FROM users where `isdelete`='n'";
         }
 
@@ -23,10 +33,10 @@ module.exports = function apiRoutes(event) {
 
     }
     api.createNewUser = function (req, res, next) {
-        // console.log(req.body);
+         console.log(req.body);
 
-        sql = 'INSERT INTO users(`name`,`othername`, `eid`,`password`,`profession_id`,`department_id`,`isadmin`,`supervisor_id`,`mobile`,`home_mobile`,`isactive`,`isbouns_hour_apply`,`basic_salary`,`per_hour_rate`,`allowance_one`,`allowance_two`,`extras`) ' +
-            'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        sql = 'INSERT INTO users(`name`,`othername`, `eid`,`password`,`profession_id`,`department_id`,`isadmin`,`supervisor_id`,`mobile`,`home_mobile`,`isactive`,`isbouns_hour_apply`,`basic_salary`,`per_hour_rate`,`allowance_one`,`allowance_two`,`project_ids`,`extras`) ' +
+            'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         var data = [
             req.body.fullname,
             req.body.othername,
@@ -44,6 +54,7 @@ module.exports = function apiRoutes(event) {
             req.body.hourrate,
             req.body.allowanceOne,
             req.body.allowanceTwo,
+            req.body.projects ? req.body.projects : null,
             req.body.extras ? req.body.extras : null
         ];
 

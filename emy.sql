@@ -21,6 +21,7 @@ CREATE TABLE `users` (
    `allowance_one` integer(10) DEFAULT 0,
    `allowance_two` integer(10) DEFAULT 0,
   `isdelete` varchar(1) DEFAULT 'n',
+  `project_ids` text DEFAULT NULL,
   `extras` text DEFAULT NULL,
    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

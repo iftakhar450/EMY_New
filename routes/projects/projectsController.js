@@ -59,21 +59,10 @@ module.exports = function apiRoutes(event) {
         });
     }
     api.updateProject = function (req, res, next) {
-        // var sql = 'UPDATE projects SET status="hold" WHERE tokens.token_no="' + token + '" AND tokens.status="process" ' +
-        //     'AND tokens.counter_id=' + req.counter.id;
-        console.log('000000000000000');
-        console.log(req.body.extras);
-        console.log(typeof req.body.extras);
-        console.log('000000000000000');
         var sdate = moment(req.body.startDate).format("YYYY-MM-DD");
         var edate = moment(req.body.endDate).format("YYYY-MM-DD");
         var sql = '';
         if (req.body.extras) {
-            // var sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
-            //     ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
-            //     ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
-            //     ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '" ' +
-            //     ', `extras` = "' + req.body.extras + '" where rec_id=' + req.body.rec_id;
              sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
             ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
             ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +

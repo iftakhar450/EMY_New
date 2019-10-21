@@ -13,7 +13,7 @@ module.exports = function apiRoutes(event) {
             // FROM emy.users LEFT JOIN emy.department ON department.rec_id = users.department_id \
             // LEFT JOIN emy.profession ON profession.rec_id = users.profession_id \
             // where users.isdelete = 'n'";
-          sql =   "SELECT users.*,department.name as depName, profession.name as profName, \
+            sql = "SELECT users.*,department.name as depName, profession.name as profName, \
           GROUP_CONCAT(projects.sid ,'-',projects.name) as projects  FROM emy.users\
             LEFT JOIN emy.department ON department.rec_id = users.department_id \
             LEFT JOIN emy.profession ON profession.rec_id = users.profession_id\
@@ -33,10 +33,15 @@ module.exports = function apiRoutes(event) {
 
     }
     api.createNewUser = function (req, res, next) {
-         console.log(req.body);
+        console.log(req.body);
 
-        sql = 'INSERT INTO users(`name`,`othername`, `eid`,`password`,`profession_id`,`department_id`,`isadmin`,`supervisor_id`,`mobile`,`home_mobile`,`isactive`,`isbouns_hour_apply`,`basic_salary`,`per_hour_rate`,`allowance_one`,`allowance_two`,`project_ids`,`extras`) ' +
-            'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        // sql = 'INSERT INTO users(`name`,`othername`, `eid`,`password`,`profession_id`,`department_id`,`isadmin`,`supervisor_id`,`mobile`,`home_mobile`,`isactive`,`isbouns_hour_apply`,`basic_salary`,`per_hour_rate`,`allowance_one`,`allowance_two`,`project_ids`,`extras`) ' +
+        //     'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        sql = 'INSERT INTO users(`name`,`othername`, `eid`,`password`,`profession_id`,\
+        `department_id`,`isadmin`,`supervisor_id`,`mobile`,`home_mobile`,`isactive`,\
+        `isbouns_hour_apply`,`basic_salary`,`per_hour_rate`,`allowance_one`,`allowance_two`,\
+        `project_ids`,`extras`) \
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         var data = [
             req.body.fullname,
             req.body.othername,
@@ -82,7 +87,29 @@ module.exports = function apiRoutes(event) {
         });
     }
     api.updateUser = function (req, res, next) {
-        return res.json({ msg: 'list off all deleteUser' });
+        var sql = 'UPDATE `users` SET `eid` = "' + req.body.eid + '", `name` = "' + req.body.fullname + '" ' +
+            ',`othername` = "' + req.body.othername + '" , `profession_id` = "' + req.body.profession + '"' +
+            ', `department_id` = "' + req.body.department + '", `isadmin` = "' + req.body.isadmin + '" ' +
+            ', `supervisor_id` = "' + req.body.supervisor + '", `mobile` = "' + req.body.mobileno + '" ' +
+            ', `home_mobile` = "' + req.body.homemobile + '",`isactive` = "' + req.body.isative + '"' +
+            ', `isbouns_hour_apply` = "' + req.body.isBounsHourApplying + '", `basic_salary` = "' + req.body.bsalary + '"' +
+            ', `per_hour_rate` = "' + req.body.hourrate + '", `allowance_one` = "' + req.body.allowanceOne + '"' +
+            ', `allowance_two` = "' + req.body.allowanceTwo + '" , `project_ids` = "' + req.body.projects + '"';
+
+        if (req.body.extras) {
+            sql += ', `extras` = "' + req.body.extras + '"';
+        }
+        sql += 'where rec_id=' + req.body.rec_id;
+
+        db.run(sql, function (err) {
+            if (err) {
+                console.log(err);
+                //  req.log.error(err);
+                return res.status(500).json({ error: err });
+            }
+            event.emit(allevents.departmentUpdate);
+            return res.status(200).json({ msg: 'Users Update successfully' });
+        });
     }
     return api;
 }

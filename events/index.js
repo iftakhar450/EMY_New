@@ -37,7 +37,10 @@ var Events = function (io) {
      this.on(allevents.projectUpdate, function () {
         self.io.of(socket.socket_main).emit(allevents.projectUpdate);
     });
-
+    // attendence updated
+    this.on(allevents.attendenceUpdate, function () {
+        self.io.of(socket.socket_main).emit(allevents.attendenceUpdate);
+    });
 
 };
 Events.prototype = Object.create(events.EventEmitter.prototype);

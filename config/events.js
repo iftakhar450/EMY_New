@@ -2,5 +2,6 @@ module.exports = {
     departmentUpdate: 'depUpdate',
     empUpdate: 'empUpdate',
     workNatureUpdate: 'worknatureUpdate',
-    projectUpdate:'projectUpdate'
+    projectUpdate:'projectUpdate',
+    attendenceUpdate:'attendenceUpdate'
 }

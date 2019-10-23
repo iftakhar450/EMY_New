@@ -6,8 +6,16 @@ module.exports = function apiRoutes(event) {
     var api = {};
     api.getAttendenceBydate = function (req, res, next) {
         var adate = moment(req.body.date).format('YYYY-MM-DD');
-        var sql = '';
-        sql = "SELECT * FROM attendence where  `added_date`>= '"+adate+"' AND `added_date` <= '"+adate+"'";
+       var sql =  "SELECT attendence.rec_id,attendence.overtime,attendence.status,attendence.added_date,\
+       u1.name as name, u2.name as supervisor, projects.name as project,projects.sid as projectId, worknatures.name as work\
+        FROM emy.attendence\
+        LEFT JOIN  emy.users      AS u1    ON   attendence.user_id =u1.rec_id \
+        LEFT JOIN  emy.users      AS u2    ON  attendence.supervisor_id = u2.rec_id \
+        LEFT JOIN emy.projects ON attendence.project_id = projects.rec_id\
+        LEFT JOIN emy.worknatures ON attendence.work_id = worknatures.rec_id\
+        where  `added_date`>= '"+adate+"' AND `added_date` <= '"+adate+"'";
+     
+        // sql = "SELECT * FROM attendence ;
         db.all(sql, function (err, rows) {
             if (err) {
                 req.log.error(err);
@@ -76,22 +84,12 @@ module.exports = function apiRoutes(event) {
         });
     }
     api.updateAttendence = function (req, res, next) {
-        var sdate = moment(req.body.startDate).format("YYYY-MM-DD");
-        var edate = moment(req.body.endDate).format("YYYY-MM-DD");
-        var sql = '';
-        if (req.body.extras) {
-            sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
-                ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
-                ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
-                ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '", `extras`= "' + req.body.extras + '"' +
+       
+          var  sql = 'UPDATE `attendence` SET `project_id` = "' + req.body.pid + '" ' +
+                ', `overtime` = "' + req.body.overtime + '", `status` = "' + req.body.status + '" ' +
+                ', `work_id` = "' + req.body.wid + '"' +
                 'where rec_id=' + req.body.rec_id;
-        } else {
-            sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
-                ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
-                ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
-                ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '" ' +
-                'where rec_id=' + req.body.rec_id;
-        }
+        
 
         db.run(sql, function (err) {
             if (err) {

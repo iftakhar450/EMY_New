@@ -13,6 +13,7 @@ module.exports = function apiRoutes(event) {
             // FROM emy.users LEFT JOIN emy.department ON department.rec_id = users.department_id \
             // LEFT JOIN emy.profession ON profession.rec_id = users.profession_id \
             // where users.isdelete = 'n'";
+            
             sql = "SELECT users.*,department.name as depName, profession.name as profName, \
           GROUP_CONCAT(projects.sid ,'-',projects.name) as projects  FROM emy.users\
             LEFT JOIN emy.department ON department.rec_id = users.department_id \

@@ -54,6 +54,6 @@ module.exports = function apiRoutes(event) {
     router.post('/addAttendence', auth,attendenceController.checkattendenceExsist, attendenceController.createNewAttendence);
     router.post('/deleteAttendence', auth, attendenceController.deleteAttendence);
     router.post('/updateAttendence', auth, attendenceController.updateAttendence);
-
+    router.post('/fetchCardData', auth, attendenceController.getCardViewData);
     return router;
 }

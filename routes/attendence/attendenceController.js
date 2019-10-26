@@ -43,11 +43,11 @@ module.exports = function apiRoutes(event) {
         });
     }
     api.getCardViewData = function (req, res, next) {
-        console.log(req.body)
+        // console.log(req.body)
         const startOfMonth = moment(req.body.date).startOf('month').format('YYYY-MM-DD');
         const endOfMonth = moment(req.body.date).endOf('month').format('YYYY-MM-DD');
-        console.log(startOfMonth);
-        console.log(endOfMonth);
+        // console.log(startOfMonth);
+        // console.log(endOfMonth);
         var adate = moment(req.body.date).format('YYYY-MM-DD');
         var sql = "SELECT attendence.rec_id,attendence.overtime,attendence.status,attendence.added_date,\
            u1.name as name, u2.name as supervisor, projects.name as project,projects.sid as projectId, worknatures.name as work\

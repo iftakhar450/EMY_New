@@ -8,6 +8,7 @@ module.exports = function (app, passport, event) {
     var users = require('./users')(event);
     var projects = require('./projects')(event);
     var settings = require('./settings')(event);
+    var reports = require('./reports')();
     
     // console.log('000000000000000000000');
     // console.log(event);
@@ -45,6 +46,7 @@ module.exports = function (app, passport, event) {
     app.use('/projects', projects);
     app.use('/users', users);
     app.use('/settings', settings);
+    app.use('/reports', reports);
     // catch 404 and forward to error handler
     // app.use(function (req, res, next) {
     //     var err = new Error('Not Found');

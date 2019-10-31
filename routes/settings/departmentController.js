@@ -36,7 +36,7 @@ api.createNewDepartment = function(req,res,next) {
     });
 }
 api.deleteDeparment = function(req,res,next) {
-    var sql = "UPDATE `department` SET `isdelete` = 'y' where rec_id=" + req.body.depId;
+    var sql = "UPDATE `department` SET `isdelete` = 'y' where rec_id=" + req.body.rec_id;
     db.run(sql, function (err) {
         if (err) {
             console.log(err);
@@ -48,6 +48,7 @@ api.deleteDeparment = function(req,res,next) {
     });
 }
 api.updateDepartment = function(req,res,next) {
+   
     var sql = "UPDATE `department` SET `name` = '"+req.body.name+"' where rec_id=" + req.body.rec_id;
     db.run(sql, function (err) {
         if (err) {

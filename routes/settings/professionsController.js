@@ -24,8 +24,6 @@ module.exports = function apiRoutes(event) {
     
     };
     api.createNewProfession = function(req, res , next) {
-        console.log(req.body);
-    
         sql = 'INSERT INTO profession(`name`,`dep_id`,`extras`) ' +
             'VALUES (?, ?, ?)';
         var data = [
@@ -41,14 +39,13 @@ module.exports = function apiRoutes(event) {
                 //  req.log.error(err);
                 return res.status(500).json({ error: err });
             }
-            return res.status(200).json({ msg: 'Department Add Successfully' });
+            return res.status(200).json({ msg: 'Profession Add Successfully' });
         });
     
     };
 
     api.deleteProfession = function (req, res, next) {
-
-        var sql = "UPDATE `profession` SET `isdelete` = 'y' where rec_id=" + req.body.depId;
+        var sql = "UPDATE `profession` SET `isdelete` = 'y' where rec_id=" + req.body.rec_id;
         db.run(sql, function (err) {
             if (err) {
                 console.log(err);

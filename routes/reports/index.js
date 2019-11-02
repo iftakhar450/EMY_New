@@ -50,6 +50,7 @@ module.exports = function apiRoutes() {
         res.send('reports is working');
     });
      router.post('/getMonthlySalaryData', auth, reportController.getDataFormMonthlySalaryReport);
+     router.get('/getDashboardData', auth, reportController.getEmployeeDetail, reportController.getProjectDetail);
 
     return router;
 }

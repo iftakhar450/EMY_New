@@ -3,13 +3,12 @@ var config = require('./../config');
 var db = config.database();
 var tokens = [];
 module.exports = function (app, passport, event) {
-
     var attendence = require('./attendence')(event);
     var users = require('./users')(event);
     var projects = require('./projects')(event);
     var settings = require('./settings')(event);
     var reports = require('./reports')();
-    
+
     // console.log('000000000000000000000');
     // console.log(event);
 
@@ -24,9 +23,10 @@ module.exports = function (app, passport, event) {
         console.log('authenticated');
         req.user.token = jwt.sign({
             data: req.user
-        }, 'emy@uae', { expiresIn: 60 * 60 });
+        }, 'emy@uae');
+        // /{ expiresIn: 60 * 60 }
         // var sql = 'INSERT INTO users_tokens(`uid`,`token`) ' +
-        //     'VALUES ("'+req.body.username+'", "'+req.user.token+'") ON DUPLICATE KEY UPDATE  token="'+req.user.token+'"';
+        //     'VALUES ("' + req.body.username + '", "' + req.user.token + '") ON DUPLICATE KEY UPDATE  token="' + req.user.token + '"';
         // db.run(sql, function (err) {
         //     if (err) {
         //         console.log(err);
@@ -41,7 +41,7 @@ module.exports = function (app, passport, event) {
 
 
 
-    
+
     app.use('/atn', attendence);
     app.use('/projects', projects);
     app.use('/users', users);

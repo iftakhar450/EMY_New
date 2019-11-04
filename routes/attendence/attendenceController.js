@@ -2,6 +2,9 @@ var config = require('./../../config');
 var db = config.database();
 var allevents = require('./../../config/events');
 var moment = require('moment');
+const mailjet = require('node-mailjet')
+    .connect('4c0868baa5e6d7d7dfada0146553e9f8', '662ecedd5df7f95ef77b5981a7ca2057')
+const request = mailjet
 module.exports = function apiRoutes(event) {
     var api = {};
     api.getAttendenceBydate = function (req, res, next) {
@@ -56,7 +59,7 @@ module.exports = function apiRoutes(event) {
             LEFT JOIN  emy.users      AS u2    ON  attendence.supervisor_id = u2.rec_id \
             LEFT JOIN emy.projects ON attendence.project_id = projects.rec_id\
             LEFT JOIN emy.worknatures ON attendence.work_id = worknatures.rec_id\
-            where  `added_date`>= '"+ startOfMonth + "' AND `added_date` <= '" + endOfMonth + "' AND user_id = '"+req.body.uid+"'";
+            where  `added_date`>= '"+ startOfMonth + "' AND `added_date` <= '" + endOfMonth + "' AND user_id = '" + req.body.uid + "'";
 
         db.all(sql, function (err, rows) {
             if (err) {
@@ -90,6 +93,7 @@ module.exports = function apiRoutes(event) {
                 }
             }
             event.emit(allevents.departmentUpdate);
+            mailSend();
             return res.status(200).json({ msg: 'Attendence Add Successfully' });
         });
     }
@@ -127,4 +131,7 @@ module.exports = function apiRoutes(event) {
     return api;
 }
 
+function mailSend() {
+    
+}
 

@@ -13,7 +13,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./updateproject.component.scss']
 })
 export class UpdateprojectComponent implements OnInit {
-  @ViewChild('extensionDate') private extensionDate;
+  @ViewChild('extensionDate',  {static: false}) private extensionDate;
   constructor(private router: Router, private projectService: ProjectService, private app: AppComponent,
     private modalService: NgbModal) {
   }

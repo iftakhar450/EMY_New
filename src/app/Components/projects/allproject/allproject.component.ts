@@ -20,8 +20,8 @@ export class AllprojectComponent implements OnInit {
   searchbyclient: any = '';
   constructor(private router: Router, private app: AppComponent, private projectService: ProjectService,
     private modalService: NgbModal, private socket: SocketService) { }
-  @ViewChild('projectInfo') private projectInfo;
-  @ViewChild('projectdelete') private projectdelete;
+  @ViewChild('projectInfo',  {static: false}) private projectInfo;
+  @ViewChild('projectdelete',  {static: false}) private projectdelete;
   ngOnInit() {
     this.getAllProjects();
     this.socketProjecttUpdateData();

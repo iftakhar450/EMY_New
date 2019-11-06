@@ -20,7 +20,7 @@ export class WorkNaturesComponent implements OnInit {
   });
   constructor(private modalService: NgbModal, private app: AppComponent, private service: SettingsService,
     private socket: SocketService) { }
-  @ViewChild('workDelete') private workDelete;
+  @ViewChild('workDelete',  {static: false}) private workDelete;
   ngOnInit() {
     this.getWorknatures();
     this.socketWorknatureUpdateData();

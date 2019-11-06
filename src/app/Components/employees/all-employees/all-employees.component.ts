@@ -22,8 +22,8 @@ export class AllEmployeesComponent implements OnInit {
   constructor(private app: AppComponent, private modalService: NgbModal,
     private employeeService: EmployeeService, private router: Router,
     private socket: SocketService) { }
-  @ViewChild('empInfo') private empInfo;
-  @ViewChild('empdelete') private empdelete;
+  @ViewChild('empInfo',  {static: false}) private empInfo;
+  @ViewChild('empdelete',  {static: false}) private empdelete;
   ngOnInit() {
     // this.app.Spinner.show();
     this.getEmpployees();

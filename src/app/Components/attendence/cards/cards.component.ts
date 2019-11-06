@@ -13,7 +13,6 @@ import html2canvas from 'html2canvas';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Img, Rect, Table, Txt } from 'pdfmake-wrapper';
-// import domtoimage from 'dom-to-image';
 import * as moment from 'moment';
 import { pseudoRandomBytes } from 'crypto';
 const colors: any = {

@@ -42,9 +42,9 @@ export class ViewAttendenceComponent implements OnInit {
   };
   constructor(private router: Router, private attendenceService: AttendenceService,
     private app: AppComponent, private modalService: NgbModal, private socket: SocketService) { }
-  @ViewChild('atnDelete') private atnDelete;
-  @ViewChild('atnInfo') private atnInfo;
-  @ViewChild('atnFilter') private atnFilter;
+  @ViewChild('atnDelete', {static: false}) private atnDelete;
+  @ViewChild('atnInfo',  {static: false}) private atnInfo;
+  @ViewChild('atnFilter',  {static: false}) private atnFilter;
   ngOnInit() {
     this.getAttendenceOfDay();
     this.socketAttendenceUpdateData();

@@ -1,0 +1,92 @@
+// e6e7e9 bb7171 4e3440
+$dashboardDivBg:#e6e7e9;
+$divHeader:#4e3440;
+$divHeader1:#bb7171;
+$textColor: white;
+
+.dashbaord_divs{
+    height: 200px;
+    padding: 10px;
+}
+
+.dashbaord_divs > div{
+    height: 100%;
+    background-color: $dashboardDivBg
+}
+.dashbaord_divs > div > label{
+//    width: 100% !important;
+
+   font-size: 18px;
+   font-weight: bold;
+   color: $divHeader1;
+   padding: 0px;
+   margin: 0px 0px 0px 10px;
+}
+.dashbaord_divs > div > hr{
+   margin: 0px !important;
+   background-color:$divHeader1;
+   height: 1px;
+ }
+ .dashbaord_divs > div > mat-icon{
+    float: right;
+    margin-right: 10px;
+    color: $divHeader1
+  }
+
+.dataDiv {
+    width: 100%;
+    padding: 5px;
+    
+}
+.dataDiv > .datalabel{
+    font-size: 20px;
+    margin: 0px;
+    color: $divHeader1;
+}
+.dataDiv > .datavalue{
+    font-size: 20px;
+    margin: 0px;
+    float: right;
+    color: $divHeader1;;
+}
+
+
+
+
+
+
+
+
+
+//   //////////////
+.attendenceGraph{
+    height: 200px;
+    background-color: $dashboardDivBg;
+    margin-top: 10px;
+    padding: 0px;
+    border:solid 1px $divHeader;
+}
+.attendenceReport{
+    height: 300px;
+    background-color: $dashboardDivBg;
+    margin-top: 10px;
+    padding: 0px;
+    border:solid 1px $divHeader;
+}
+.attendenceGraphHeader{
+    height: 40px;
+    background-color: $divHeader;
+    padding: 8px
+}
+.attendenceReportHeader{
+    height: 40px;
+    background-color: $divHeader;
+    padding: 8px;
+}
+.attendenceGraphHeader > span{
+    color: $textColor;
+   
+}
+.attendenceReportHeader >span{
+   color: $textColor;
+}

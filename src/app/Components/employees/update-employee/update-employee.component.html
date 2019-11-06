@@ -1,0 +1,156 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Update Employee'"></app-header>
+  <!-- <span>employees data to be loaded here!</span> -->
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <button class="btn btn-default addnew" (click)="goToAllEmployee()">
+        <mat-icon aria-hidden="false" aria-label="Back">keyboard_backspace</mat-icon>
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+      <form [formGroup]="updateEmployee" style="font-family: 'Varela Round', sans-serif !important;">
+        <div class="form-row">
+          <div class="col-md-4 mb-4">
+            <label class="container">
+              <input type="checkbox" [checked]="marked" data-md-icheck (change)="toggleVisibility($event)" />
+              This user is <span *ngIf="marked">admin now</span><span *ngIf="!marked">not admin now</span>
+              <span class="checkmark"></span>
+            </label>
+
+          </div>
+          <div class="col-md-4 mb-4">
+            <label class="container">
+              <input type="checkbox"  [checked]="isBounsHour" data-md-icheck (change)="toggleBounsHour($event)" />
+              Bonus hour is<span *ngIf="isBounsHour"> applying now</span><span *ngIf="!isBounsHour"> not applying</span>
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="col-md-4 mb-4">
+            <label for="isative">Active/Deactive</label> &nbsp;&nbsp;
+            <label class="switch">
+              <input (change)="toggleisactive($event)" type="checkbox" [checked]="isactive">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="eid">Emirates ID</label>
+            <input type="number" formControlName="eid" class="form-control" id="eid" placeholder="Enter emirates id">
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.eid.touched || (!this.updateEmployee.controls.eid.valid && this.updateEmployee.controls.eid.touched)">*emirates
+              id required</span>
+            &nbsp; &nbsp;
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.eid.valid && this.updateEmployee.controls.eid.touched">*this field
+              accept
+              number only</span>
+          </div>
+          <div *ngIf="!marked" class="col-md-6 mb-6">
+            <label for="supervisor">Select Supervisor</label>
+            <app-dropdown [dataArray]="supervisors" [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'rec_id'" [dataField]="'name'"
+            (valueChange)="supervisorChanged($event)" [selected]="selectedSupervisor">
+            </app-dropdown>
+          </div>
+          <div *ngIf="marked" class="col-md-6 mb-6">
+            <label for="supervisor">Select Projects</label>
+            <app-dropdown [dataArray]="projects" [isSingleSelection]="fasle" [isSearchAllow]="true" [idField]="'rec_id'" [dataField]="'name'"
+            (valueChange)="projectsChanged($event)" [selected]="selectedProjects">
+            </app-dropdown>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="fname">Full Name</label>
+            <input type="text" formControlName="fullname" class="form-control" id="fname" placeholder="Enter full name">
+
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.fullname.touched || (!this.updateEmployee.controls.fullname.valid && this.updateEmployee.controls.fullname.touched)">*name
+              id required</span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="oname">Other Name</label>
+            <input type="text" formControlName="othername" class="form-control" id="oname"
+              placeholder="Enter other name">
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="mno">Mobile</label>
+            <input type="number" formControlName="mobileno" class="form-control" id="mno" placeholder="Enter mobile no">
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.mobileno.touched || (!this.updateEmployee.controls.mobileno.valid && this.updateEmployee.controls.mobileno.touched)">*mobile
+              no
+              required</span>
+            &nbsp; &nbsp;
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.mobileno.valid && this.updateEmployee.controls.mobileno.touched">*this
+              field accept
+              number only</span>
+          </div>
+
+          <div class="col-md-6 mb-6">
+            <label for="mno">Mobile(home)</label>
+            <input type="number" formControlName="homemobile" class="form-control" id="homemobile"
+              placeholder="Enter your home mobile no">
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.homemobile.touched || (!this.updateEmployee.controls.homemobile.valid && this.updateEmployee.controls.homemobile.touched)">*mobile
+              no
+              required</span>
+            &nbsp; &nbsp;
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.homemobile.valid && this.updateEmployee.controls.homemobile.touched">*this
+              field accept
+              number only</span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="profession">Select Department</label>
+            <app-dropdown [dataArray]="departments" [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'rec_id'" [dataField]="'name'"
+            (valueChange)="departmentChange($event)" [selected] ="selectedDepartment">
+            </app-dropdown>
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.department.valid">*department
+              is required</span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="profession">Select Profession</label>
+            <app-dropdown [dataArray]="professions" [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'rec_id'" [dataField]="'name'"
+            (valueChange)="professionsChange($event)" [selected]="selectedProfession">
+            </app-dropdown>
+            <span class="inputFieldError"
+              *ngIf="!this.updateEmployee.controls.profession.valid">*profession
+              is required</span>
+          </div>
+
+          <div class="col-md-6 mb-6">
+            <label for="bsalary">Basic Salary</label>
+            <input type="number" formControlName="bsalary" class="form-control" id="bsalary"
+              placeholder="Enter basic salary per month">
+            <span></span>
+          </div>
+
+          <div class="col-md-6 mb-6">
+            <label for="hourrate">Per Hour Rate</label>
+            <input type="number" formControlName="hourrate" class="form-control" id="hourrate"
+              placeholder="Enter per  hour rate">
+            <span></span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="allowanceOne">Allowance 1</label>
+            <input type="number" formControlName="allowanceOne" class="form-control" id="allowanceOne"
+              placeholder="Enter allowance one per month">
+            <span></span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="hourrate">Allowance 2</label>
+            <input type="number" formControlName="allowanceTwo" class="form-control" id="allowanceTwo"
+              placeholder="Enter allowance two per month">
+            <span></span>
+          </div>
+
+
+        </div>
+        <div class="row btndiv" style="margin-top: 10px">
+          <button class="btn submitbtn" type="submit" (click)="updateEmployeeData()">Update</button>
+          <!-- <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button> -->
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

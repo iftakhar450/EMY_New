@@ -1,0 +1,77 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="''"></app-header>
+  <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="float: left;padding: 10px">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 dashbaord_divs">
+      <div class="col-xs-12">
+        <label>EMPLOYEES</label>
+        <mat-icon aria-hidden="false" aria-label="group">group</mat-icon>
+        <hr>
+        <div class="dataDiv">
+          <label class="datalabel">Working</label>
+          <label class="datavalue">{{empDetail.active_users}}</label>
+        </div>
+        <div class="dataDiv">
+          <label class="datalabel">On-Leave</label>
+          <label class="datavalue">{{empDetail.deactive_users}}</label>
+        </div>
+        <div class="dataDiv">
+          <label class="datalabel">Total</label>
+          <label class="datavalue">{{empDetail.active_users + empDetail.deactive_users}}</label>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 dashbaord_divs">
+      <div class="col-xs-12">
+        <label>Projects</label>
+        <mat-icon aria-hidden="false" aria-label="home">home</mat-icon>
+        <hr>
+        <div style="width: 100%;overflow:auto;height: 150px;">
+          <div class="dataDiv" *ngFor="let item of projectDetail">
+            <label class="datalabel">{{item.status}}</label>
+            <label class="datavalue">{{item.count}}</label>
+          </div>
+          <div class="dataDiv">
+              <label class="datalabel">Total</label>
+              <label class="datavalue">{{totalProjects()}}</label>
+            </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 dashbaord_divs">
+      <div class="col-xs-12">
+
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 dashbaord_divs">
+      <div class="col-xs-12">
+
+      </div>
+    </div> -->
+
+  </div>
+
+  <!-- <div class="row col-xs-12 col-sm-3 col-md-3 col-lg-3 "  style="float: left">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 attendenceGraph">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 attendenceGraphHeader">
+          <span>Last Day Report Graph</span>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="row col-xs-12 col-sm-3 col-md-3 col-lg-3 ">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 attendenceReport">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 attendenceReportHeader">
+            <span>Last Day Report Detail</span>
+          </div>
+
+    </div>
+  </div> -->
+
+</div>
+<!-- <p>
+  dashboard works!
+</p> -->

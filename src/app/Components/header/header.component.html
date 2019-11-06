@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-xs-10 col-sm-12 col-lg-12 header">
+    <div class="header_label">
+      <label> <span style="cursor: pointer" (click)="goToDashboard()">Dashboard</span> / {{this.headerlabel}}</label>
+
+    </div>
+    <div class="btn-group dropbottom  logout" data-toggle="dropdown">
+      <mat-icon aria-hidden="false" style="float: left" aria-label="Home">person</mat-icon>
+      <label>{{username}}</label>
+      <div class="dropdown-menu">
+        <a class="dropdown-item " style="cursor: pointer" (click)="open(content)">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- logout model -->
+<ng-template #content let-modal>
+  <!-- <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Alert</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">Are your sure to logout?</label>
+        <div class="input-group">
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="logout()">Logout</button>
+    <button type="button" class="btn btn-success" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>

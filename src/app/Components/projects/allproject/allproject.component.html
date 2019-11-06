@@ -1,0 +1,126 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Projects'"></app-header>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px">
+    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <input type="text" [(ngModel)]='searchbyclient' class="form-control" placeholder="Search by client">
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <app-dropdown [placeHolder]="'Filter by Status'" [dataArray]="projectFilterOption" [isSingleSelection]="true"
+          [isSearchAllow]="true" [idField]="'name'" [dataField]="'name'" (valueChange)="projectFilterOptionChange($event)">
+        </app-dropdown>
+      </div>
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+
+      </div>
+      <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+        <button class="btn btn-default addnew" (click)="goToAddnewProject()">
+          <mat-icon aria-hidden="false" aria-label="Home">add</mat-icon>
+        </button>
+      </div>
+
+
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+      <table class="table table-striped" [mfData]="allProjects" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead class="tablehead">
+          <tr>
+            <th class="empTableHead">
+              <mfDefaultSorter by="sid">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon>
+                <span>Side ID</span>
+              </mfDefaultSorter>
+            </th>
+
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="name">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Client Name</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Area</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Location</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Status</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <span>Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data | search :searchbyclient">
+            <td>{{item.sid}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.area}}</td>
+            <td>{{item.location}}</td>
+            <td>{{item.status}}</td>
+            <td>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="projectEditClick(item)"
+                aria-hidden="false" aria-label="Edit user">edit
+              </mat-icon>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="projectDeleteClick(item)"
+                aria-hidden="false" aria-label="Delete user">
+                cancel
+              </mat-icon>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="projectInfoClick(item)"
+                aria-hidden="false" aria-label="read more">info
+              </mat-icon>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- models for employees -->
+<!-- emp more info -->
+<ng-template #projectInfo let-modal>
+  <div class="modal-body">
+    <div class="empInfoHeader"> {{selectedproject.name}} Other Information</div>
+    <label><b>Client Name</b> <span>{{selectedproject.name}}/{{selectedproject.translation}}</span></label><br>
+    <label><b>Start Date</b> <span>{{selectedproject.startDate | dateFormat}} </span></label><br>
+    <label><b>End Date</b><span>{{selectedproject.endDate | dateFormat}} </span></label><br>
+    <label *ngFor="let ext of extensions;let i = index" ><b>Extension {{i+1}}</b><span>{{ext | dateFormat}} </span></label><br>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+<!-- emp delete modal -->
+<ng-template #projectdelete let-modal>
+    <div class="modal-body">
+      <!-- <div class="empInfoHeader"> {{selectedproject.name}} </div> -->
+  <label>Are u sure to delete  {{selectedproject.name }} project!</label>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+      <button type="button" class="btn submitbtn" (click)="deleteProject()">Delete</button>
+    </div>
+  </ng-template>

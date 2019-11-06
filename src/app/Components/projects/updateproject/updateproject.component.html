@@ -1,0 +1,104 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Update Project'"></app-header>
+  <!-- <span>employees data to be loaded here!</span> -->
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <button class="btn btn-default addnew" (click)="goToAllProject()">
+        <mat-icon aria-hidden="false" aria-label="Back">keyboard_backspace</mat-icon>
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+      <form [formGroup]="updateProject" style="font-family: 'Varela Round', sans-serif !important;">
+        <div class="form-row">
+          <div class="col-md-4 mb-4">
+          </div>
+          <div class="col-md-4 mb-4">
+          </div>
+          <div class="col-md-4 mb-4">
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="sid">Project/Side ID</label>
+            <input type="text" formControlName="sid" class="form-control" id="sid" placeholder="Enter project id">
+            <span class="inputFieldError" *ngIf="!this.updateProject.controls.sid.valid">*project/side
+              id required</span>
+          </div>
+          <div  class="col-md-6 mb-6">
+            <label for="supervisor">Select Status</label>
+            <app-dropdown [dataArray]="projectStatus" [isSingleSelection]="true" [isSearchAllow]="false"
+              [idField]="'id'" [dataField]="'text'" [selected]="selectedStatus"
+              (valueChange)="projectStatusChanged($event)">
+            </app-dropdown>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="fname">Client Name</label>
+            <input type="text" formControlName="fullname" class="form-control" id="fname"
+              placeholder="Enter client name">
+
+            <span class="inputFieldError" *ngIf="!this.updateProject.controls.fullname.valid">*client name
+              required</span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="oname">Other Name</label>
+            <input type="text" formControlName="othername" class="form-control" id="oname"
+              placeholder="Enter client other name">
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="oname">Area</label>
+            <input type="text" formControlName="area" class="form-control" id="area" placeholder="Enter project area">
+            <span class="inputFieldError" *ngIf="!this.updateProject.controls.area.valid">*area
+              is required</span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="oname">Location</label>
+            <input type="text" formControlName="location" class="form-control" id="location"
+              placeholder="Enter project location">
+            <span class="inputFieldError" *ngIf="!this.updateProject.controls.location.valid">*location
+              is required</span>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="endDate">Start Date</label>
+            <ng-datepicker formControlName="startDate" id="startDate" position="bottom-left"></ng-datepicker>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="endDate">End Date</label>
+            <ng-datepicker formControlName="endDate" id="endDate" position="bottom-left"></ng-datepicker>
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="endDate">Click to add extension date</label>
+            <button class="btn submitbtn" type="submit" (click)="extensionDateClick()"
+              style="padding: 0px;margin: 10px;height: 30px;width: 30px">
+              <mat-icon aria-hidden="false" aria-label="Back">add</mat-icon>
+            </button>
+          </div>
+          <br />
+          <div class="col-md-12 mb-12" *ngFor="let ext of extensiondatearrary;let i = index">
+           <!-- Extension {{i+1}} {{ext | dateFormat}} -->
+           <div class="extensionDiv">
+             <span> {{ext | dateFormat}}</span>
+             <mat-icon  aria-hidden="false" (click)="cancelExtension(i)" aria-label="Back">cancel</mat-icon>
+           </div>
+           
+          </div>
+        </div>
+        <div class="row btndiv" style="margin-top: 10px">
+          <button class="btn submitbtn" type="submit" (click)="UpdateProject()">Update</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+<!-- add extension date  modal -->
+<ng-template #extensionDate let-modal>
+  <div class="modal-body">
+    <div class="col-md-12 mb-12">
+      <label for="extensiondate">Add Extension Date</label>
+      <ng-datepicker id="extensiondate" [(ngModel)]='extensiondate' position="bottom-left"></ng-datepicker>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+    <button type="button" class="btn submitbtn" (click)="addExtension()">Add</button>
+  </div>
+</ng-template>

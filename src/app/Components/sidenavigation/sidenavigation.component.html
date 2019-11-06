@@ -1,0 +1,57 @@
+<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 sidenav">
+    <div class="logo">
+        <img  src="/src/assets/custom/emyLogo.png"/>
+
+    </div>
+    <!-- <div class="navigation">
+            <label [ngClass]="employeesClass" (click)="changeNavigation('employees')">Employees</label>
+            <label [ngClass]="projectClass" (click)="changeNavigation('projects')">Projects</label>
+            <label [ngClass]="attendenceClass" (click)="changeNavigation('attendence')">Attendence</label>
+            <label [ngClass]="reportClass" (click)="changeNavigation('reports')">Reports</label>
+    </div> -->
+    <div class="navigation">
+        <div class="btn-group dropright">
+            <button type="button" [ngClass]="employeesClass" (click)="changeNavigation('employees')" class="btn">
+                Employees
+            </button>
+        </div>
+        <div class="btn-group dropright">
+            <button type="button" [ngClass]="projectClass" (click)="changeNavigation('projects')" class="btn">
+                Projects
+            </button>
+        </div>
+
+        <div class="btn-group dropright">
+            <button type="button" [ngClass]="attendenceClass" class="btn  dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Attendence
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" (click)="changeNavigation('viewAttendence')">Attendence</a>
+                <a class="dropdown-item" (click)="changeNavigation('viewCards')">Cards</a>
+            </div>
+        </div>
+        <div class="btn-group dropright">
+            <button type="button" [ngClass]="reportClass" class="btn  dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Reports
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" (click)="changeNavigation('month_salary_report')">Monthly Salary Report</a>
+                <!-- <a class="dropdown-item">Report 2</a> -->
+            </div>
+        </div>
+        <div class="btn-group dropright">
+            <button type="button" [ngClass]="settingClass" class="btn  dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Settings
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" (click)="changeNavigation('departmentsandprofession')">Departments and Professions</a>
+                <a class="dropdown-item" (click)="changeNavigation('worknatures')">Work Natures</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

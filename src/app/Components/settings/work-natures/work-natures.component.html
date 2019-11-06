@@ -1,0 +1,94 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Work Natures'"></app-header>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 contnetDiv">
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12  divheader">
+      <label>Work Natures</label>
+      <button class="btn btn-default addnewHere" (click)="open(worknature)">
+        <mat-icon aria-hidden="false" aria-label="Home">add</mat-icon>
+      </button>
+    </div>
+    <div class="divBody">
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" *ngFor="let wok of allWorknatures"
+        style="float: left">
+        <div class="row dataDiv">
+          <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+            <input class="dataname" [attr.disabled]="wok.disabled ? '' : null" [(ngModel)]="wok.name" />
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
+            <input class="dataname" [attr.disabled]="wok.disabled ? '' : null" [(ngModel)]="wok.translation" />
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2" style="padding: 0px">
+            <span class="dataicon">
+              <mat-icon aria-hidden="false" (click)="deleteWorkNatureAlert(wok)" aria-label="Cancle">cancel</mat-icon>
+            </span>
+            <span class="dataicon" *ngIf="!wok.disabled">
+              <mat-icon aria-hidden="false" (click)="updateWorknature(wok)" aria-label="done">done</mat-icon>
+            </span>
+            <span class="dataicon" *ngIf="wok.disabled">
+              <mat-icon aria-hidden="false" (click)="EditToggle(wok)" aria-label="Edit">edit</mat-icon>
+            </span>
+          </div>
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- add worknature  model -->
+<ng-template #worknature let-modal>
+  <div class="modal-body">
+    <form [formGroup]="newWorkNature" style="font-family: 'Varela Round', sans-serif !important;">
+      <div class="form-row">
+        <div class="col-md-12 mb-12">
+          <label for="fname">Enter Work Nature</label>
+          <input type="text" formControlName="name" class="form-control" id="fname" placeholder="Enter full name">
+          <span class="inputFieldError" *ngIf="isWorkNature">*this work nature name
+            already taken</span>
+          <br>
+          <span class="inputFieldError"
+            *ngIf="!this.newWorkNature.controls.name.valid && this.newWorkNature.controls.name.touched">*work nature
+            name required</span>
+        </div>
+        <div class="col-md-12 mb-12">
+          <label for="translation">Enter Translation of Work Nature</label>
+          <input type="text" formControlName="translation" class="form-control" id="translation"
+            placeholder="Enter translation of work nature">
+          <span class="inputFieldError"
+            *ngIf="!this.newWorkNature.controls.translation.valid && this.newWorkNature.controls.translation.touched">*work
+            nature
+            translation required</span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-danger" (click)="logout()">Logout</button> -->
+    <button class="btn submitbtn" type="submit" [disabled]="isWorkNature" (click)="submitWorknature()">Add</button>
+
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+
+<!-- emp delete -->
+<ng-template #workDelete let-modal>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">Are your sure to delete <b>{{selectedwork.name}}</b> ?</label>
+        <div class="input-group">
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn submitbtn" (click)="deleteWorknature()">Delete</button>
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>

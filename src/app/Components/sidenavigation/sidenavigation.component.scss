@@ -1,0 +1,54 @@
+$navBackgroundColor:#4e3440;
+$navTextColor:white;
+$navBtnBackground:#bb7171;
+.sidenav{
+    background-color: $navBackgroundColor;height: 100vh;float: left;
+}
+.logo{
+    height: 100px;
+    width: 100%;
+    text-align: center;
+}
+.navigation{
+    width: 100%;
+    text-align: center;
+}
+.navigation > div{
+    width: 85%;
+    height: 60;
+    text-align: center;
+    border: solid 1px $navBtnBackground;
+    color: $navTextColor;
+    padding: 10px;
+    font-size: 12pt;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 10px;
+
+}
+.navigation>div>button{
+    color: $navTextColor;
+    font-family: 'Varela Round';
+    width: 100%;
+    font-size: 1.2vw;
+    font-weight: bold
+    
+}
+
+.navigation >div:hover{
+    text-align: center;
+    border: solid 1px $navBtnBackground;
+    color: $navTextColor;
+    background-color: $navBtnBackground;
+
+}
+
+.activeClass {
+    background-color: $navBtnBackground;
+}
+.dropdown-menu > a:hover{
+    background-color: $navBtnBackground;
+    color: $navTextColor;
+}
+ 

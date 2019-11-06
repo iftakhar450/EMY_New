@@ -1,0 +1,41 @@
+.container-fluid{
+    background-color: #1C1F24;
+    height: 100vh;
+    width: 100vw;
+     display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.container{
+    background-color: #181818;
+    display: inline-block;
+    /* height: 60vh; */
+    padding: 10px
+    
+}
+.loginLable{
+    text-align: center;
+    font-size: 40px;
+    color: white
+}
+.inputlogin{
+    height: 60px;
+    border: solid 1px #1b7fbd;
+    border-radius: 30px;
+    background: transparent;
+    color: white;
+    margin-top:20px;
+    text-align: center;
+    outline-style: none;
+}
+.btnlogin{
+    background-color: transparent;
+    height: 60px;
+    border: solid 1px #009975;
+    border-radius: 30px;
+    margin-top:20px;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    outline-style: none;
+}

@@ -1,0 +1,132 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Employee Cards'"></app-header>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="float: left;padding: 0px !important">
+        <!-- <ng-multiselect-dropdown [placeholder]="placeholder" [data]="allEmployess" [(ngModel)]="selected_item"
+          [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+          (onDeSelect)="onItemDeSelect($event)" (onDeSelectAll)="onDeSelectAll($event)">
+        </ng-multiselect-dropdown> -->
+        <app-dropdown [dataArray]="allEmployess" [isSingleSelection]="true" [isSearchAllow]="true"
+              [idField]="'rec_id'" [dataField]="'name'" (valueChange)="userChanged($event)">
+            </app-dropdown>
+      </div>
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="float: left; text-align: center">
+        <h3 style="font-size:25px;margin-top:7px">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4" style="float: left;">
+        <div class="btn-group">
+          <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="loadPreviousMonth()">
+            Previous
+          </div>
+          <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+            Today
+          </div>
+          <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="loadNextMonth()">
+            Next
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 btn-group dropbottom">
+        <button type="button" style="background: #4e3440;color:white" class="btn  dropdown-toggle"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          More
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="exportCardAsPdf()">Export as PDF</a>
+          <a *ngIf="cardView" class="dropdown-item" (click)="changeView()">Table View</a>
+          <a *ngIf="!cardView" class="dropdown-item" (click)="changeView()">Card View</a>
+          <!-- <a class="dropdown-item" (click)="changeNavigation('viewCards')">Cards</a> -->
+        </div>
+      </div>
+
+    </div>
+     <div *ngIf="cardView" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody" id="userCardView">
+      <mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+        [cellTemplate]="customCellTemplate">
+
+      </mwl-calendar-month-view> 
+    </div> 
+    <div *ngIf="!cardView" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody" >
+      <table class="table table-striped" id="userAttendence" [mfData]="attendenceForTable" #mf="mfDataTable" [mfRowsOnPage]="16">
+        <thead class="tablehead">
+          <tr>
+            <th class="empTableHead">
+              <mfDefaultSorter by="added_date">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon>
+                <span>Date</span>
+              </mfDefaultSorter>
+            </th>
+
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Status</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Supervisor</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Side/Project</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <span>Overtime</span>
+            </th>
+            <th class="empTableHead">
+              <span>Work</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.added_date | dateFormat}}</td>
+            <td>{{item.status}}</td>
+            <td>{{item.supervisor}}</td>
+            <td>
+              {{item.projectId}}-{{item.project}}
+            </td>
+            <td>
+              {{item.overtime}}
+            </td>
+            <td>
+              {{item.work}}
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top" style="min-height: 50px !important">
+    <span class="cal-day-badge" *ngIf="day.events.length > 0">{{ day.events[0].title }}</span>
+    <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+  </div>
+  <small style="margin: 5px;" *ngIf="day.events.length > 0">
+    <span *ngIf="day.events[0].overtime">Ovt: <b>{{day.events[0].overtime}}hrs</b> </span>
+    <span style="float: right;" *ngIf="day.events[0].title == 'P' || day.events[0].title == 'W'">
+      Side: <b>{{day.events[0].side}}</b>
+    </span>
+  </small>
+  <small *ngIf="day.events.length > 0" style="text-align: center">{{day.events[0].supervisor}}</small>
+</ng-template>

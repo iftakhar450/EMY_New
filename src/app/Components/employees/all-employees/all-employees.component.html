@@ -1,0 +1,150 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Employees'"></app-header>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px">
+    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <input type="text" [(ngModel)]='searchbyUsername'  class="form-control" id="eid" placeholder="Search employee here!">
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+          <app-dropdown [placeHolder] = "'Filter by profession'"  [dataArray]="profFilterOption" [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'name'" [dataField]="'name'"
+          (valueChange)="profFilterOptionChange($event)">
+          </app-dropdown>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+          <app-dropdown [placeHolder] = "'Filter by supervisor'" [dataArray]="supervisorFilterOption" [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'rec_id'" [dataField]="'name'"
+          (valueChange)="supervisorFilterOptionChange($event)">
+          </app-dropdown>
+      </div>
+      <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
+        <button class="btn btn-default addnew" (click)="goToAddnewEmployee()">
+          <mat-icon aria-hidden="false" aria-label="Home">add</mat-icon>
+        </button>
+      </div>
+
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+
+      <table class="table table-striped" [mfData]="allEmployess" #mf="mfDataTable" [mfRowsOnPage]="14">
+        <thead class="tablehead">
+          <tr>
+            <th class="empTableHead">
+              <mfDefaultSorter by="name">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon>
+                <span>Name</span>
+              </mfDefaultSorter>
+            </th>
+
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Mobile</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Profession</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Supervisor</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Status</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <span>Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data | search :searchbyUsername">
+            <td>{{item.name}}</td>
+            <td>{{item.mobile}}</td>
+            <td>{{item.profName}}</td>
+            <td>{{getSupervisorName(item.supervisor_id)}}</td>
+            <td>
+              <span class="activeEmp" *ngIf="item.isactive == 'y'">Active</span>
+              <span class="inactiveEmp" *ngIf="item.isactive == 'n'">Inactive</span>
+            </td>
+            <td>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="empEditClick(item)" aria-hidden="false"
+                aria-label="Edit user">edit
+              </mat-icon>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="empDeleteClick(item)" aria-hidden="false"
+                aria-label="Delete user">
+                cancel
+              </mat-icon>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="empInfoClick(item)" aria-hidden="false"
+                aria-label="read more">info
+              </mat-icon>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- models for employees -->
+<!-- emp more info -->
+<ng-template #empInfo let-modal>
+  <div class="modal-body">
+    <div class="empInfoHeader">{{selectedEmp.name}} Personal Information</div>
+    <label><b>ID</b> <span>{{selectedEmp.eid}}</span></label> <br>
+    <label><b>Home Contact Number</b><span>{{selectedEmp.home_mobile}}</span></label><br>
+    <label><b>Profession</b><span> {{selectedEmp.profName}}</span></label><br>
+    <label><b>Department</b><span>{{selectedEmp.depName}}</span></label><br>
+    <label><b>Status</b>
+      <span class="activeEmp" *ngIf="selectedEmp.isactive == 'y'">Active</span>
+      <span class="inactiveEmp" *ngIf="selectedEmp.isactive == 'n'">Inactive</span>
+    </label>
+    <div class="empInfoHeader"> {{selectedEmp.name}} Other Information</div>
+    <label><b>Basic Salary</b> <span>{{selectedEmp.basic_salary}} AED</span></label><br>
+    <label><b>Per Hour Rate</b><span>{{selectedEmp.per_hour_rate}} AED</span></label><br>
+    <label><b>Allowance One</b><span>{{selectedEmp.allowance_one}} AED</span></label><br>
+    <label><b>Allowance Two</b><span>{{selectedEmp.allowance_two}} AED</span></label><br>
+    <label><b>Is Bonus Hour Apply</b>
+      <span class="isBonushour" *ngIf="selectedEmp.isbouns_hour_apply == 'n'">No</span>
+      <span class="isBonushour" *ngIf="selectedEmp.isbouns_hour_apply == 'y'">Yes</span>
+    </label>
+    <div *ngIf="selectedEmp.isadmin == 'y'" class="empInfoHeader" > {{selectedEmp.name}} Projects</div>
+    <label *ngIf="selectedEmp.isadmin == 'y'">{{selectedEmp.projects}}</label>
+   </div>
+  <div class="modal-footer">
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+<!-- emp delete -->
+<ng-template #empdelete let-modal>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">Are your sure to delete <b>{{selectedEmp.name}}</b> ?</label>
+        <div class="input-group">
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteEmployee()">Delete</button>
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>

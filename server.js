@@ -1,3 +1,4 @@
+global.__base = __dirname + '/';
 var path = require('path');
 var express = require('express');
 var app = express();
@@ -34,9 +35,8 @@ require('./config/database')().connect(function (err, connect) {
 
 
 
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/dist/Emy-frontend-new'));
 app.use(passport.initialize());
-
 
 require('./config/passport')(passport);
 require('./routes')(app, passport, events);
@@ -58,5 +58,8 @@ function normalizePort(val) {
 
     return false;
 }
+
+app.use(express.static(path.join(__dirname, 'dist/Emy-frontend-new')));
+app.get('/', (req, res) => { res.sendFile(path.join(__dirname, '/dist/Emy-frontend-new/index.html')); });
 module.exports = app;
 module.exports.passport = passport;

@@ -1,0 +1,55 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Add Attendence'"></app-header>
+  <!-- <span>employees data to be loaded here!</span> -->
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <button class="btn btn-default addnew" (click)="goToAttendence()">
+        <mat-icon aria-hidden="false" aria-label="Back">keyboard_backspace</mat-icon>
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+      <form [formGroup]="addAttendence" style="font-family: 'Varela Round', sans-serif !important;">
+        <div class="form-row">
+          <div  class="col-md-6 mb-6">
+            <label for="supervisor">Select Employee</label>
+            <app-dropdown [dataArray]="users" [isSingleSelection]="true" [isSearchAllow]="true"
+              [idField]="'rec_id'" [dataField]="'name'" (valueChange)="employeesChanged($event)">
+            </app-dropdown>
+          </div>
+         
+          <div  class="col-md-6 mb-6">
+            <label for="supervisor">Select Status</label>
+            <app-dropdown [dataArray]="attendenceStatus" [isSingleSelection]="true" [isSearchAllow]="true"
+              [idField]="'id'" [dataField]="'text'" (valueChange)="statusChanged($event)">
+            </app-dropdown>
+          </div>
+          <div  class="col-md-6 mb-6" *ngIf="isPresent">
+            <label for="supervisor">Select Project/Side</label>
+            <app-dropdown [dataArray]="projects" [isSingleSelection]="true" [isSearchAllow]="true"
+              [idField]="'rec_id'" [dataField]="'name'" (valueChange)="projectChanged($event)">
+            </app-dropdown>
+          </div>
+          <div  class="col-md-6 mb-6" *ngIf="isPresent">
+            <label for="supervisor">Select Worknature</label>
+            <app-dropdown [dataArray]="typeOfWorks" [isSingleSelection]="true" [isSearchAllow]="true"
+              [idField]="'rec_id'" [dataField]="'name'" (valueChange)="worknatureChanged($event)">
+            </app-dropdown>
+          </div>
+          <div  class="col-md-6 mb-6" *ngIf="isPresent">
+            <label for="supervisor">Overtime</label>
+            <input type="number" formControlName="overtime" class="form-control" id="Overtime" placeholder="Enter overtime  hours">
+          </div>
+          <div  class="col-md-6 mb-6">
+              <label for="endDate">Attendence Date</label>
+              <ng-datepicker  formControlName="date" id="date" position="bottom-left"></ng-datepicker>
+            </div>
+        </div>
+        <div class="row btndiv" style="margin-top: 10px">
+          <button class="btn submitbtn" type="submit" (click)="submitAttendence()">Submit</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

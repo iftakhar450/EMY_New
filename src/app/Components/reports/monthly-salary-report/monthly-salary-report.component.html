@@ -1,0 +1,139 @@
+<span style="width: 100%"></span>
+<span style="width: 100%"></span>
+<span style="width: 100%"></span>
+<span style="width: 100%"></span>
+<span style="width: 100%"></span>
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Monthly Salary Report'"></app-header>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px">
+    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" style="margin: 0px;float: left;">
+        <!-- <ng-multiselect-dropdown [placeholder]="placeholder" [data]="allEmployess" [(ngModel)]="selected_item"
+          [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+          (onDeSelect)="onItemDeSelect($event)" (onDeSelectAll)="onDeSelectAll($event)">
+        </ng-multiselect-dropdown> -->
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin: 0px;float: left; text-align: center">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4" style="margin: 0px;float: left;">
+        <div class="btn-group">
+          <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="loadPreviousMonth()">
+            Previous
+          </div>
+          <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+            Today
+          </div>
+          <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+            (viewDateChange)="loadNextMonth()">
+            Next
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1" style="margin: 0px;float: right;">
+        <!-- <button class="btn btn-default addnew" (click)="exportAsExcel()">
+          <mat-icon aria-hidden="false" aria-label="Back">arrow_downward</mat-icon>
+        </button> -->
+        <button type="button" style="background: #4e3440;color:white" class="btn  dropdown-toggle"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          More
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="exportAsExcel()">Export as CSV</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+      <label style="width: 100%;text-align: center">Days of Month :<b>{{daysOfMonth}}</b></label>
+      <table class="table table-striped" [mfData]="salaryData" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead class="tablehead">
+          <tr style="text-align: center">
+            <th class="empTableHead" >
+              <span>Name</span>
+            </th>
+
+            <th class="empTableHead">
+              <span>Basic.Sal</span>
+            </th>
+            <th class="empTableHead">
+              <span>Allow 1</span>
+            </th>
+            <th class="empTableHead">
+              <span>Allow 2</span>
+            </th>
+            <th class="empTableHead">
+              <span>Mos Total</span>
+            </th>
+            <th class="empTableHead">
+              <span>D/R</span>
+            </th>
+            <th class="empTableHead">
+              <span>R/P</span>
+            </th>
+            <th class="empTableHead">
+              <span>Present</span>
+            </th>
+            <th class="empTableHead">
+              <span>Absent</span>
+            </th>
+            <th class="empTableHead">
+              <span>Working Days</span>
+            </th>
+            <th class="empTableHead">
+              <span>Sal of Month</span>
+            </th>
+            <th class="empTableHead">
+              <span>Ovt Hrs</span>
+            </th>
+            <th class="empTableHead">
+              <span>Ovt Amount</span>
+            </th>
+            <th class="empTableHead">
+              <span>Bonus ovt</span>
+            </th>
+            <th class="empTableHead">
+              <span>Bonus ovt Amount</span>
+            </th>
+            <th class="empTableHead">
+              <span>Gross Total</span>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data" style="text-align: center">
+            <td>{{item.name}}</td>
+            <td>{{item.bsalary}}</td>
+            <td>{{item.allownsOne}}</td>
+            <td>{{item.allownsTwo}}</td>
+            <td>{{item.monthTotal }}</td>
+            <td>{{item.dailyRate }}</td>
+            <td>{{item.ratePerHour}}</td>
+            <td>{{item.present}}</td>
+            <td>{{item.absent}}</td>
+            <td>{{item.workkingsDays}}</td>
+            <td>{{item.salaryOfMonth }}</td>
+            <td>{{item.overtimeHoure}}</td>
+            <td>{{item.overtimeAmount }}</td>
+            <td>{{item.bounsHour}}</td>
+            <td>{{item.bounsHourAmount}}</td>
+            <td>{{item.grossTotal }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+</div>

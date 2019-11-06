@@ -1,0 +1,171 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Attendence'"></app-header>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px">
+    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <!-- <div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+        <label for="endDate">Select Date</label>
+        <ng-datepicker [(ngModel)]='selectedDate' id="date"  position="bottom-left"></ng-datepicker>
+      </div> -->
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <app-dropdown [placeHolder]="'Filter by Project/Side'" [dataArray]="projectFilterOption"
+          [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'rec_id'" [dataField]="'name'"
+          (valueChange)="projectFilterOptionChange($event)">
+        </app-dropdown>
+      </div>
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <app-dropdown [placeHolder]="'Filter by Supervisor'" [dataArray]="supervisorFilterOption"
+          [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'rec_id'" [dataField]="'name'"
+          (valueChange)="supervisorFilterOptionChange($event)">
+        </app-dropdown>
+      </div>
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <app-dropdown [placeHolder]="'Filter by Status'" [dataArray]="statusFilterOption" [isSingleSelection]="true"
+          [isSearchAllow]="false" [idField]="'id'" [dataField]="'text'"
+          (valueChange)="statusFilterOptionChange($event)">
+        </app-dropdown>
+      </div>
+      <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+        <button class="btn btn-default addnew" (click)="goToAddAttendence()">
+          <mat-icon aria-hidden="false" aria-label="Home">add</mat-icon>
+        </button>
+        <button class="btn btn-default addnew" (click)="showFilterOption()">
+          <mat-icon aria-hidden="false" aria-label="Home">filter_list</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+      <label *ngIf="attendences.length > 0" style="width: 100%;text-align: center">Attendence detail for
+        {{selectedDate | dateFormat}} </label>
+      <table *ngIf="attendences.length > 0" class="table table-striped" [mfData]="attendences" #mf="mfDataTable"
+        [mfRowsOnPage]="10">
+        <thead class="tablehead">
+          <tr>
+            <th class="empTableHead">
+              <mfDefaultSorter by="name">
+                <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon>
+                <span>Name</span>
+              </mfDefaultSorter>
+            </th>
+
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="name">
+                    <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Project/Side</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="name">
+                    <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Added by</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <!-- <th class="empTableHead"> -->
+            <!-- <mfDefaultSorter by="mobile">
+                    <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+            <!-- <span>Overtime</span> -->
+            <!-- </mfDefaultSorter> -->
+            <!-- </th> -->
+            <!-- <th class="empTableHead"> -->
+            <!-- <mfDefaultSorter by="mobile">
+                    <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+            <!-- <span>Work</span> -->
+            <!-- </mfDefaultSorter> -->
+            <!-- </th> -->
+            <th class="empTableHead">
+              <!-- <mfDefaultSorter by="mobile">
+                    <mat-icon aria-hidden="false" aria-label="sort by id">sort</mat-icon> -->
+              <span>Status</span>
+              <!-- </mfDefaultSorter> -->
+            </th>
+            <th class="empTableHead">
+              <span>Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.name}}</td>
+            <td>{{item.projectId}}-{{item.project}}</td>
+            <td>{{item.supervisor}}</td>
+            <!-- <td>{{item.overtime}} - Hrs</td> -->
+            <!-- <td>{{item.work}}</td> -->
+            <td>
+              <span class="present" *ngIf="item.status == 'Present'">{{item.status}}</span>
+              <span class="absent" *ngIf="item.status == 'Absent'">{{item.status}}</span>
+              <span class="leave" *ngIf="item.status == 'Leave'">{{item.status}}</span>
+              <span class="weekend" *ngIf="item.status == 'Weekend'">{{item.status}}</span>
+              <!-- {{item.status}} -->
+            </td>
+            <td>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="attendenceEditClick(item)"
+                aria-hidden="false" aria-label="Edit user">edit
+              </mat-icon>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="attendenceDeleteClick(item)"
+                aria-hidden="false" aria-label="Delete user">
+                cancel
+              </mat-icon>
+              <mat-icon *ngIf="item.eid !== 'root' " class="empIcons" (click)="attendenceInfoClick(item)"
+                aria-hidden="false" aria-label="read more">info
+              </mat-icon>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <div *ngIf="attendences.length <= 0" class="notFoundDiv">
+        <label>No Record Found</label>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!-- atndelete delete modal -->
+<ng-template #atnDelete let-modal>
+  <div class="modal-body">
+    <!-- <div class="empInfoHeader"> {{selectedproject.name}} </div> -->
+    <label>Are you sure to delete ?</label>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+    <button type="button" class="btn submitbtn" (click)="attendenceDelete()">Delete</button>
+
+  </div>
+</ng-template>
+<!-- atndelete inof modal -->
+<ng-template #atnInfo let-modal>
+  <div class="modal-body">
+    <div class="empInfoHeader">{{selectedatn.name}} Attendence Information</div>
+    <label><b>Date</b> <span>{{selectedatn.added_date | dateFormat}}</span></label> <br>
+    <label><b>Work Nature</b> <span>{{selectedatn.work}}</span></label> <br>
+    <label><b>Overtime</b><span>{{selectedatn.overtime}} Hrs</span></label><br>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+
+</ng-template>
+<!-- atndelete inof modal -->
+<ng-template #atnFilter let-modal>
+  <div class="modal-body">
+
+    <div class="empInfoHeader">Select date to fetch the attendence detail</div>
+    <br />
+    <ng-datepicker [(ngModel)]='selectedDate' id="date" position="bottom-left"></ng-datepicker>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+    <button type="button" class="btn cancelbtn" (click)="attendenceFilterClear()">Clear Filter</button>
+    <button type="button" class="btn submitbtn" (click)="attendenceFilterSubmit()">Filter</button>
+  </div>
+</ng-template>

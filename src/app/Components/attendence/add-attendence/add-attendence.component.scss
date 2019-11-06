@@ -1,0 +1,18 @@
+$orimeryColor:#4e3440;
+$secondrayColor:#bb7171;
+$primeryTextColor:white;
+.btndiv > button{
+    float: right !important;
+    margin-left: 85% !important;
+    }
+      /* dropdown  */
+  .multiselect-dropdown .dropdown-btn {
+    background-color: white !important;
+    border: none !important;
+  }
+  .ngx-datepicker-container .ngx-datepicker-input{
+    width: 100% !important;
+  }
+  .ngx-datepicker-position-bottom-left {
+    z-index: 2 !important;
+  }

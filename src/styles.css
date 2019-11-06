@@ -1,0 +1,170 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
+/* @import "~font-awesome/css/font-awesome.css"; */
+/* @import url('/src/assets/fonts/Varela_Round/VarelaRound-Regular.ttf'); */
+/* @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; */
+@font-face {
+    font-family: 'Varela Round';
+    src: url("/src/assets/fonts/Varela_Round/VarelaRound-Regular.ttf") format("truetype");
+    font-weight:300;
+    
+  }
+.body{
+    height: 100vh; 
+    float: right;
+    font-family: 'Varela Round', sans-serif ;
+    /* background-color: #c3c3c3 */
+}
+.addnew {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px !important;
+    background-color: #4e3440 !important;
+    float: right !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 0px !important;
+    margin-right: 5px;
+}
+.addnew > mat-icon{
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+    margin-right: 10px !important
+}
+.modal-header {
+    background-color: #4e3440;
+    color: white;
+    font-weight: bold;
+}
+.inputFieldError{
+    color: red;
+    font-size: 10px;
+}
+.submitbtn{
+    background-color: #4e3440 !important;
+    color: white !important;
+
+}
+.cancelbtn{
+    background-color: #bb7171 !important;
+    color: white !important;
+}
+
+/* toggle button */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #bb7171;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .subHeader{
+    min-height: 50px;
+    width: 100%;
+    padding-left: 0px !important;
+  }
+  .subHeader > div {
+    margin-top: 5px;
+  }
+  .subBody {
+    height: 81vh;
+    width: 100%;
+    overflow-y: auto;
+    /* border:solid 3px #4e3440; */
+    padding: 10px;
+    background: #e6e7e9;
+    margin-top: 10px;
+  }
+
+  /* dropdown  */
+  .multiselect-dropdown .dropdown-btn {
+    background-color: white !important;
+    /* border: none !important; */
+  }
+  .multiselect-dropdown .dropdown-btn .selected-item {
+    background: #bb7171 !important;
+    border-color: #bb7171 !important;
+  }
+  /* common tables css */
+  table {
+    /* height: 100%; */
+    margin-bottom: 0px !important;
+  }
+  .tablehead {
+    background: #bb7171 !important;
+    color: white !important;
+    font-weight: bold;
+  }
+  .table th,  .table td{
+    padding: 0px !important;
+    padding-left: 3px !important;
+    vertical-align: middle !important
+  }
+  .pagination {
+    float: left !important;
+  }
+/* 
+  input{
+    border: 1px solid #dfe3e9 !important;
+    border-radius: 0px !important;
+  } */
+  label{
+    font-family: 'Varela Round', sans-serif ;
+  }
+  .dropdown-menu > .dropdown-item{
+    font-family: 'Varela Round', sans-serif ;
+  }

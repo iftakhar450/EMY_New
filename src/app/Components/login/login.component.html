@@ -1,0 +1,12 @@
+<div class="container-fluid row">
+  <div class="col-lg-6 col-lg-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 container">
+    <label class="loginLable col-xs-12 col-lg-12 col-sm-12">LOGIN</label>
+    <input class="col-xs-6  col-xs-offset-3 col-lg-8 col-sm-10 inputlogin" [(ngModel)]="username"  placeholder="Username" type="text" />
+    <input class="col-xs-6  col-xs-offset-3 col-lg-8 col-sm-10 inputlogin" [(ngModel)]="password" placeholder="Password" type="password" />
+    <!-- <div class="row col-lg-12 col-sm-12 col-xs-12"> -->
+      <br>
+      <button (click)="login()" (keydown)="login()" class="col-xs-12 col-lg-4 col-lg-offset-4 col-sm-4 col-sm-offset-4  btnlogin">
+        Login</button>
+    <!-- </div> -->
+  </div>
+</div>

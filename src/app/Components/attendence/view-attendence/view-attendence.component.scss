@@ -1,0 +1,62 @@
+
+$orimeryColor:#4e3440;
+$secondrayColor:#bb7171;
+$primeryTextColor:white;
+
+.notFoundDiv{
+    height: 100%;
+    text-align: center;
+}
+.notFoundDiv > label{
+    margin-top: 30%;
+    font-size: 15px;
+}
+.empIcons {
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  .datePicker{
+      z-index: 1;
+  }
+  .present {
+      color: green;
+      font-weight: bold;
+     
+  }
+  .absent {
+    color: red;
+    font-weight: bold;
+}
+.leave {
+   color: blue;
+    font-weight: bold;
+
+}
+.weekend {
+    color: black;
+    
+    font-weight: bold;
+    
+}
+.empInfoHeader {
+    background-color: $secondrayColor;
+    width: 100%;
+    color: $primeryTextColor;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Varela Round', sans-serif ; 
+  }
+   label{
+     width: 100%;
+    font-family: 'Varela Round', sans-serif ;
+  }
+  label > span {
+    float: right;
+    padding:5px;
+  }
+  input {
+      z-index: 1 !important;
+  }
+  .ngx-datepicker-position-bottom-left{
+      z-index: 1 !important;
+  }

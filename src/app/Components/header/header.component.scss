@@ -1,0 +1,39 @@
+
+$headerBackgroundColor:#bb7171;
+$headerTextColor:white;
+.header{
+
+height:50px;
+background-color:$headerBackgroundColor;
+width: 100%;
+float: right;
+/* text-align: center; */
+/* vertical-align: middle */
+}
+.header_label{
+    height: 100%;
+    text-align: center;
+    /* width: 100px; */
+    color: $headerTextColor;
+    padding: 0 auto;
+    font-size: 15pt;
+    /* font-weight: bold; */
+    padding-top:10px;
+    float: left;
+}
+.logout{
+    height: 70%;
+    margin-top: 10px;
+    text-align: center;
+    width: 190px;
+    color: $headerTextColor;
+    font-size: 10pt;
+    padding:5px;
+    float: right;
+    border: 2px solid $headerTextColor;
+    border-radius: 15px
+   
+}
+.logout > label {
+    cursor: pointer;
+}

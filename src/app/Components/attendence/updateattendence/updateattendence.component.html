@@ -1,0 +1,51 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Update Attendence'"></app-header>
+  <!-- <span>employees data to be loaded here!</span> -->
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 10px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subHeader">
+      <button class="btn btn-default addnew" (click)="goToAllAttendence()">
+        <mat-icon aria-hidden="false" aria-label="Back">keyboard_backspace</mat-icon>
+      </button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
+      <form [formGroup]="updateAttendence" style="font-family: 'Varela Round', sans-serif !important;">
+        <div class="form-row">
+          <div class="col-md-4 mb-4">
+          </div>
+          <div class="col-md-4 mb-4">
+          </div>
+          <div class="col-md-4 mb-4">
+          </div>
+          <div class="col-md-6 mb-6">
+            <label for="supervisor">Select Status</label>
+            <app-dropdown [dataArray]="attendenceStatus" [isSingleSelection]="true" [isSearchAllow]="false"
+              [idField]="'id'" [dataField]="'text'" [selected]="selectedStatus" (valueChange)="statusChanged($event)">
+            </app-dropdown>
+          </div>
+          <div class="col-md-6 mb-6" *ngIf="isPresent">
+            <label for="supervisor">Select Project/Side</label>
+            <app-dropdown [dataArray]="projectFilterOption" [isSingleSelection]="true" [isSearchAllow]="true" [idField]="'rec_id'"
+              [dataField]="'name'"  [selected]="selectedproject" (valueChange)="projectsChanged($event)">
+            </app-dropdown>
+          </div>
+          <div class="col-md-6 mb-6" *ngIf="isPresent">
+            <label for="supervisor">Select Worknature</label>
+            <app-dropdown [dataArray]="workNatureFilterOption" [isSingleSelection]="true" [isSearchAllow]="true"
+              [idField]="'rec_id'" [dataField]="'name'" [selected]="selectedWorknature" (valueChange)="worknatureChanged($event)">
+            </app-dropdown>
+          </div>
+          <div class="col-md-6 mb-6" *ngIf="isPresent">
+            <label for="supervisor">Overtime</label>
+            <input type="number" formControlName="overtime" class="form-control" id="Overtime"
+              placeholder="Enter overtime  hours">
+          </div>
+        </div>
+        <div class="row btndiv" style="margin-top: 10px">
+          <button class="btn submitbtn" type="submit" (click)="updateAttendenceSubmit()">Update</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>

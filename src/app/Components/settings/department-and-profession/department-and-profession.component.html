@@ -1,0 +1,140 @@
+<div
+  class="col-xs-12 col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 col-lg-10 col-lg-offset-2 container-fluied body">
+  <app-header [headerText]="'Departments and Occupations'"></app-header>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 contnetDiv">
+    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12  divheader">
+      <label>Departments</label>
+      <button class="btn btn-default addnewHere" (click)="open(department)">
+        <mat-icon aria-hidden="false" aria-label="Home">add</mat-icon>
+      </button>
+    </div>
+    <div class="divBody">
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" *ngFor="let dep of allDepartments"
+        style="padding: 2px;float: left">
+        <div class="dataDiv">
+
+          <input class="dataname" [attr.disabled]="dep.disabled ? '' : null" [(ngModel)]="dep.name" />
+          <span class="dataicon">
+            <mat-icon aria-hidden="false" aria-label="Cancle" (click)="deleteDepartmentClick(deldepartment, dep)">cancel</mat-icon>
+          </span>
+          <span class="dataicon" *ngIf="!dep.disabled">
+            <mat-icon aria-hidden="false" (click)="updateDepartment(dep)" aria-label="done">done</mat-icon>
+          </span>
+          <span class="dataicon" *ngIf="dep.disabled">
+            <mat-icon aria-hidden="false" (click)="EditToggle(dep)" aria-label="Edit">edit</mat-icon>
+          </span>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 contnetDiv">
+    <div class="divheader">
+      <label>Professions / Occupations</label>
+      <button class="btn btn-default addnewHere" (click)="open(profession)">
+        <mat-icon aria-hidden="false" aria-label="Home">add</mat-icon>
+      </button>
+    </div>
+    <div class="divBody">
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" *ngFor="let pro of allProfessions"
+        style="padding: 2px;float: left">
+        <div class="dataDiv">
+         
+          <input class="dataname" [attr.disabled]="pro.disabled ? '' : null" [(ngModel)]="pro.name" />
+          <span class="dataicon">
+            <mat-icon aria-hidden="false" aria-label="Cancel" (click)="deleteProfessionClick(delprofession,pro)">cancel</mat-icon>
+          </span>
+          <span class="dataicon" *ngIf="!pro.disabled">
+            <mat-icon aria-hidden="false" (click)="updateProfession(pro)" aria-label="done">done</mat-icon>
+          </span>
+          <span class="dataicon" *ngIf="pro.disabled">
+            <mat-icon aria-hidden="false" (click)="EditToggle(pro)" aria-label="Edit">edit</mat-icon>
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- add new department  model -->
+<ng-template #department let-modal>
+  <div class="modal-body">
+    <form [formGroup]="newDepartment" style="font-family: 'Varela Round', sans-serif !important;">
+      <div class="form-row">
+        <div class="col-md-6 mb-6">
+          <label for="fname">Enter Department Name</label>
+          <input type="text" formControlName="name" class="form-control" id="fname" placeholder="Enter full name">
+          <span class="inputFieldError"
+            *ngIf="!this.newDepartment.controls.name.valid">*department
+            name required</span> 
+          <span class="inputFieldError" *ngIf="isDepartmentMatched">*department name
+            already taken</span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-danger" (click)="logout()">Logout</button> -->
+    <button class="btn submitbtn" type="submit" [disabled]="isDepartmentMatched"
+      (click)="submitDepartment()">Add</button>
+
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+
+<!-- add new profession  model -->
+<ng-template #profession let-modal>
+  <div class="modal-body">
+    <form [formGroup]="newProfession" style="font-family: 'Varela Round', sans-serif !important;">
+      <div class="form-row">
+        <div class="col-md-6 mb-6">
+          <label for="pname">Enter Profession Name</label>
+          <input type="text" formControlName="name" class="form-control" id="pname" placeholder="Enter full name">
+          <span class="inputFieldError"
+            *ngIf="!this.newProfession.controls.name.valid">*profession
+            name required</span>
+          <span class="inputFieldError" *ngIf="isProfessionMatched">*profession name
+            already taken</span>
+         
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-danger" (click)="logout()">Logout</button> -->
+    <button class="btn submitbtn" type="submit" [disabled]="isProfessionMatched"
+      (click)="submitProfession()">Add</button>
+
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+<!-- delete profession  model -->
+<ng-template #delprofession let-modal>
+  <div class="modal-body">
+    <label>Are you sure to delete <b>{{selectedProf.name}}</b></label>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-danger" (click)="logout()">Logout</button> -->
+    <button class="btn submitbtn" type="submit" [disabled]="isProfessionMatched"
+      (click)="deleteProfession()">Delete</button>
+
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>
+<!-- delete deparment  model -->
+<ng-template #deldepartment let-modal>
+  <div class="modal-body">
+    <label>Are you sure to delete this delete <b>{{selectedDep.name}}</b></label>
+  </div>
+  <div class="modal-footer">
+    <!-- <button type="button" class="btn btn-danger" (click)="logout()">Logout</button> -->
+    <button class="btn submitbtn" type="submit" [disabled]="isProfessionMatched"
+      (click)="deleteDepartment()">Delete</button>
+
+    <button type="button" class="btn cancelbtn" (click)="modal.dismiss('Cross click')">Cancel</button>
+  </div>
+</ng-template>

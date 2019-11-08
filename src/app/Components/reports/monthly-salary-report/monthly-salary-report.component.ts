@@ -50,8 +50,13 @@ export class MonthlySalaryReportComponent implements OnInit {
       obj.monthTotal = obj.bsalary + obj.allownsOne + obj.allownsTwo;
       obj.dailyRate = Math.round((obj.monthTotal / this.daysOfMonth) * 100) / 100;
       obj.ratePerHour = Math.round((obj.bsalary / 240) * 100) / 100;
-      obj.workkingsDays = this.daysOfMonth - (2 * obj.absent);
-      obj.salaryOfMonth = obj.workkingsDays * obj.dailyRate;
+      obj.workkingsDays = element.presents - (2 * obj.absent);
+      if (obj.workkingsDays > 0) {
+        obj.salaryOfMonth = obj.workkingsDays * obj.dailyRate;
+      } else {
+        obj.workkingsDays = 0;
+        obj.salaryOfMonth = 0;
+      }
       obj.overtimeHoure = this.countOVertimeHours(element.overtime);
       obj.overtimeAmount = Math.round((obj.overtimeHoure * obj.ratePerHour) * 100) / 100;
       if (obj.workkingsDays === this.daysOfMonth) {
@@ -80,7 +85,7 @@ export class MonthlySalaryReportComponent implements OnInit {
 
   loadNextMonth() {
     this.daysOfMonth = moment(this.viewDate).daysInMonth();
-     this.getSalaryReport();
+    this.getSalaryReport();
   }
   loadPreviousMonth() {
     this.daysOfMonth = moment(this.viewDate).daysInMonth();

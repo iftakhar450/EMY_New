@@ -11,11 +11,11 @@ module.exports = function apiRoutes(event) {
         var adate = moment(req.body.date).format('YYYY-MM-DD');
         var sql = "SELECT attendence.rec_id,attendence.overtime,attendence.status,attendence.added_date,\
        u1.name as name, u2.name as supervisor, projects.name as project,projects.sid as projectId, worknatures.name as work\
-        FROM emy.attendence\
-        LEFT JOIN  emy.users      AS u1    ON   attendence.user_id =u1.rec_id \
-        LEFT JOIN  emy.users      AS u2    ON  attendence.supervisor_id = u2.rec_id \
-        LEFT JOIN emy.projects ON attendence.project_id = projects.rec_id\
-        LEFT JOIN emy.worknatures ON attendence.work_id = worknatures.rec_id\
+        FROM attendence\
+        LEFT JOIN  users      AS u1    ON   attendence.user_id =u1.rec_id \
+        LEFT JOIN  users      AS u2    ON  attendence.supervisor_id = u2.rec_id \
+        LEFT JOIN projects ON attendence.project_id = projects.rec_id\
+        LEFT JOIN worknatures ON attendence.work_id = worknatures.rec_id\
         where  `added_date`>= '"+ adate + "' AND `added_date` <= '" + adate + "'";
 
         // sql = "SELECT * FROM attendence ;
@@ -54,11 +54,11 @@ module.exports = function apiRoutes(event) {
         var adate = moment(req.body.date).format('YYYY-MM-DD');
         var sql = "SELECT attendence.rec_id,attendence.overtime,attendence.status,attendence.added_date,\
            u1.name as name, u2.name as supervisor, projects.name as project,projects.sid as projectId, worknatures.name as work\
-            FROM emy.attendence\
-            LEFT JOIN  emy.users      AS u1    ON   attendence.user_id =u1.rec_id \
-            LEFT JOIN  emy.users      AS u2    ON  attendence.supervisor_id = u2.rec_id \
-            LEFT JOIN emy.projects ON attendence.project_id = projects.rec_id\
-            LEFT JOIN emy.worknatures ON attendence.work_id = worknatures.rec_id\
+            FROM attendence\
+            LEFT JOIN  users      AS u1    ON   attendence.user_id =u1.rec_id \
+            LEFT JOIN  users      AS u2    ON  attendence.supervisor_id = u2.rec_id \
+            LEFT JOIN projects ON attendence.project_id = projects.rec_id\
+            LEFT JOIN worknatures ON attendence.work_id = worknatures.rec_id\
             where  `added_date`>= '"+ startOfMonth + "' AND `added_date` <= '" + endOfMonth + "' AND user_id = '" + req.body.uid + "'";
 
         db.all(sql, function (err, rows) {

@@ -10,15 +10,15 @@ module.exports = function apiRoutes(event) {
         }
         else {
             // sql = "SELECT users.*,department.name as depName, profession.name as profName \
-            // FROM emy.users LEFT JOIN emy.department ON department.rec_id = users.department_id \
-            // LEFT JOIN emy.profession ON profession.rec_id = users.profession_id \
+            // FROM users LEFT JOIN department ON department.rec_id = users.department_id \
+            // LEFT JOIN profession ON profession.rec_id = users.profession_id \
             // where users.isdelete = 'n'";
             
             sql = "SELECT users.*,department.name as depName, profession.name as profName, \
-          GROUP_CONCAT(projects.sid ,'-',projects.name) as projects  FROM emy.users\
-            LEFT JOIN emy.department ON department.rec_id = users.department_id \
-            LEFT JOIN emy.profession ON profession.rec_id = users.profession_id\
-            LEFT JOIN emy.projects ON FIND_IN_SET(projects.rec_id, users.project_ids) != 0\
+          GROUP_CONCAT(projects.sid ,'-',projects.name) as projects  FROM users\
+            LEFT JOIN department ON department.rec_id = users.department_id \
+            LEFT JOIN profession ON profession.rec_id = users.profession_id\
+            LEFT JOIN projects ON FIND_IN_SET(projects.rec_id, users.project_ids) != 0\
             where users.isdelete = 'n'\
             group by users.rec_id"
             //  sql = "SELECT * FROM users where `isdelete`='n'";

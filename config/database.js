@@ -15,6 +15,8 @@ var fs = require('fs');
 const importer = require('node-mysql-importer')
 var config = require('./mysqlconfig');
 var con = mysql.createConnection(config);
+console.log(config);
+console.log(con)
 var DbManager = function () {
     var sql_adpt = {};
     var importsql = function (callback) {

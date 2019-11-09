@@ -12,5 +12,5 @@ module.exports = {
     host: process.env.MYSQL_URI || "us-cdbr-iron-east-05.cleardb.net",
     user: process.env.MYSQL_USER || "bfa8ab275f223a",
     password: process.env.MYSQL_PASSWORD || "61311f5e",
-    database: process.env.MYSQL_DATABASE || "heroku_a252573ffce18d2",
+    database: process.env.MYSQL_DATABASE || "inspirebuilders",
 };

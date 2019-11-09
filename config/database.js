@@ -56,6 +56,8 @@ var DbManager = function () {
                         importsql(callback);
 
                     } else {
+                        console.log('0000000000000000000');
+                        console.log(err);
                         // callback(err);
                         process.exit(1)
                     }

@@ -26,6 +26,8 @@ var DbManager = function () {
         })
         tempcont.query('CREATE DATABASE ' + config.database, function (error, results, fields) {
             if (error) {
+                console.log('error at database creation');
+                console.log(error);
                 callback(error);
             } else {
                 importer.config(config)
@@ -47,6 +49,8 @@ var DbManager = function () {
             con = mysql.createConnection(config);
             con.connect(function (err) {
                 if (err) {
+                    console.log('create connection error')
+                    console.log(err)
                     if (err.errno == 1049) {
                         con.destroy();
                         importsql(callback);

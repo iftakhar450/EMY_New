@@ -14,18 +14,17 @@ var mysql = require('mysql');
 var fs = require('fs');
 const importer = require('node-mysql-importer')
 var config = require('./mysqlconfig');
-var con = mysql.createPool(config);
+var con = mysql.createConnection(config);
 
 var DbManager = function () {
     var sql_adpt = {};
     var importsql = function (callback) {
-        var tempcont = mysql.createPool({
+        var tempcont = mysql.createConnection({
             host: config.host,
             user: config.user,
             password: config.password,
             multipleStatements: true
         })
-        
         tempcont.query('CREATE DATABASE ' + config.database, function (error, results, fields) {
             if (error) {
                 console.log('error at database creation');
@@ -36,7 +35,7 @@ var DbManager = function () {
 
                 importer.importSQL('./emy.sql').then(() => {
                     tempcont.destroy();
-                    con = mysql.createPool(config);
+                    con = mysql.createConnection(config);
                     console.log('all statements have been executed')
                 }).catch(err => {
                     console.log(`error: ${err}`)
@@ -48,7 +47,7 @@ var DbManager = function () {
     sql_adpt.connect = function (callback) {
 
         if (con.state == "disconnected") {
-            con = mysql.createPool(config);
+            con = mysql.createConnection(config);
             con.connect(function (err) {
                 if (err) {
                     console.log('create connection error')
@@ -73,7 +72,7 @@ var DbManager = function () {
                 console.log('--------------------mysql error--------------');
                 console.log('db error', err);
                 if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-                    con = mysql.createPool(config);
+                    con = mysql.createConnection(config);
                     con.connect();
                 } else {
                     throw err;

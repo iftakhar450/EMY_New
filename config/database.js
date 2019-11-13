@@ -102,7 +102,39 @@ var DbManager = function () {
         });
     }
 
-   
+    sql_adpt.run = function (query, data, callback) {
+
+        var check_callback;
+        if (callback) {
+            check_callback = callback;
+        } else {
+            check_callback = data;
+        }
+        sql_adpt.connect(function (err, db) {
+            if (err) {
+                return check_callback(err, null);
+            } else {
+                if (callback) {
+                    var value = [];
+                    var column = [];
+                    data.forEach(obj => {
+                        var checkNull = obj ? "'" + obj + "'" : null;
+                        query = query.replace(/[?]/, checkNull);
+                    });
+                }
+
+
+                db.query(query, function (err, result, fields) {
+                    if (err) {
+                        return check_callback(err, null);
+                    } else {
+                        return check_callback(null, result.insertId);
+                    }
+                });
+            }
+
+        });
+    }
     return sql_adpt
 }
 

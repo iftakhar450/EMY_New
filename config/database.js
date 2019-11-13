@@ -14,8 +14,9 @@ var mysql = require('mysql');
 var fs = require('fs');
 const importer = require('node-mysql-importer')
 var config = require('./mysqlconfig');
-var con = mysql.createPool(config);
-
+var con = mysql.createConnection(config);
+// console.log(config);
+// console.log(con)
 var DbManager = function () {
     var sql_adpt = {};
     var importsql = function (callback) {
@@ -101,67 +102,7 @@ var DbManager = function () {
         });
     }
 
-    sql_adpt.run = function (query, data, callback) {
-
-        var check_callback;
-        if (callback) {
-            check_callback = callback;
-        } else {
-            check_callback = data;
-        }
-        sql_adpt.connect(function (err, db) {
-            if (err) {
-                return check_callback(err, null);
-            } else {
-                if (callback) {
-                    var value = [];
-                    var column = [];
-                    data.forEach(obj => {
-                        var checkNull = obj ? "'" + obj + "'" : null;
-                        query = query.replace(/[?]/, checkNull);
-                    });
-                }
-
-
-                db.query(query, function (err, result, fields) {
-                    if (err) {
-                        return check_callback(err, null);
-                    } else {
-                        return check_callback(null, result.insertId);
-                    }
-                });
-            }
-
-        });
-    }
-
-
-
-    sql_adpt.each = function (query, callback) {
-        sql_adpt.connect(function (err, db) {
-            if (err) {
-                return callback(err, null);
-            } else {
-
-                db.query(query, function (err, result, fields) {
-
-                    if (err) {
-                        console.log("query executed sqlitedb.js", query);
-                        console.log("err from query", err);
-                        return callback(err, null);
-                    } else {
-                        var output = null;
-                        if (result.length) {
-                            output = result[0]
-                        }
-                        return callback(null, output);
-                    }
-                });
-            }
-
-        });
-    }
-
+   
     return sql_adpt
 }
 

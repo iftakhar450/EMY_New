@@ -5,7 +5,7 @@ export const environment = {
   attenedenceStatus: [{ id: 1, text: 'Present' }, { id: 2, text: 'Absent' },
   { id: 3, text: 'Leave' }, { id: 4, text: 'Weekend' }],
 
-  baseUrl: '',
+  baseUrl: 'http://inspire-builder.herokuapp.com',
   loginApi: '/login',
   // employees
   addNewEmplyee: '/users/createNewUser',

@@ -21,7 +21,7 @@ var con = mysql.createPool(config);
 var DbManager = function () {
     var sql_adpt = {};
     var importsql = function (callback) {
-        var tempcont = mysql.createConnection({
+        var tempcont = mysql.createPool({
             host: config.host,
             user: config.user,
             password: config.password,
@@ -49,7 +49,7 @@ var DbManager = function () {
     sql_adpt.connect = function (callback) {
 
         if (con.state == "disconnected") {
-            con = mysql.createConnection(config);
+            con = mysql.createPool(config);
             con.connect(function (err) {
                 if (err) {
                     console.log('create connection error')
@@ -72,7 +72,7 @@ var DbManager = function () {
                 console.log('--------------------mysql error--------------');
                 console.log('db error', err);
                 if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-                    con = mysql.createConnection(config);
+                    con = mysql.createPool(config);
                     con.connect();
                 } else {
                     throw err;

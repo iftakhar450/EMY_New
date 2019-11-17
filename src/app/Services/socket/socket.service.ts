@@ -12,7 +12,7 @@ export class SocketService {
 
   constructor() {
     console.log('socket service');
-    this.socket = io('http://localhost:3000/main');
+    this.socket = io('http://inspire-builder.herokuapp.com/main');
     //   this.socket = io.connect('localhost', {
     //     port: 3000
     // });

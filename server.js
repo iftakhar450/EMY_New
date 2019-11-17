@@ -35,6 +35,7 @@ require('./config/database')().connect(function (err, connect) {
 
 
 
+
 // app.use(express.static(__dirname + '/dist/Emy-frontend-new'));
 app.use(passport.initialize());
 

@@ -14,7 +14,8 @@ var mysql = require('mysql');
 var fs = require('fs');
 const importer = require('node-mysql-importer')
 var config = require('./mysqlconfig');
-var con = mysql.createConnection(config);
+var con = mysql.createPool(config);
+
 // console.log(config);
 // console.log(con)
 var DbManager = function () {
@@ -36,7 +37,7 @@ var DbManager = function () {
 
                 importer.importSQL('./emy.sql').then(() => {
                     tempcont.destroy();
-                    con = mysql.createConnection(config);
+                   // con = mysql.createConnection(config);
                     console.log('all statements have been executed')
                 }).catch(err => {
                     console.log(`error: ${err}`)
@@ -58,9 +59,7 @@ var DbManager = function () {
                         importsql(callback);
 
                     } else {
-                        console.log('0000000000000000000');
                         console.log(err);
-                        // callback(err);
                         process.exit(1)
                     }
 
@@ -135,6 +134,11 @@ var DbManager = function () {
 
         });
     }
+
+
+
+  
+
     return sql_adpt
 }
 

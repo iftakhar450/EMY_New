@@ -10,7 +10,7 @@ module.exports = function apiRoutes(event) {
     api.getAttendenceBydate = function (req, res, next) {
         var adate = moment(req.body.date).format('YYYY-MM-DD');
         var sql = "SELECT attendence.rec_id,attendence.overtime,attendence.status,attendence.added_date,\
-       u1.name as name, u2.name as supervisor, projects.name as project,projects.sid as projectId, worknatures.name as work\
+       u1.name as name, u1.othername as othername, u2.name as supervisor, projects.name as project,projects.sid as projectId, worknatures.name as work\
         FROM attendence\
         LEFT JOIN  users      AS u1    ON   attendence.user_id =u1.rec_id \
         LEFT JOIN  users      AS u2    ON  attendence.supervisor_id = u2.rec_id \

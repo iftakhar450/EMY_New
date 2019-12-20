@@ -46,9 +46,7 @@ export class AddNewEmployeeComponent implements OnInit {
     bsalary: new FormControl(0, Validators.compose([
       Validators.pattern('^[0-9]+$')
     ])),
-    hourrate: new FormControl(0, Validators.compose([
-      Validators.pattern('^[0-9]+$')
-    ])),
+    hourrate: new FormControl(0),
     allowanceOne: new FormControl(0, Validators.compose([
       Validators.pattern('^[0-9]+$')
     ])),
@@ -67,7 +65,7 @@ export class AddNewEmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.addNewEmplyee.get('bsalary').valueChanges.subscribe(value => {
-      this.addNewEmplyee.controls.hourrate.setValue(this.addNewEmplyee.controls.bsalary.value / 240);
+      this.addNewEmplyee.controls.hourrate.setValue(Math.round((this.addNewEmplyee.controls.bsalary.value / 240) * 100) / 100);
     });
     this.supervisors = JSON.parse(localStorage.getItem('supervisors'));
     // this.departments = this.getDepartments();
@@ -170,6 +168,10 @@ export class AddNewEmployeeComponent implements OnInit {
   }
   submitNewWEmployeeData() {
     console.log(this.addNewEmplyee.value);
+    console.log(this.addNewEmplyee.controls.bsalary);
+    console.log(this.addNewEmplyee.controls.allowanceOne);
+    console.log(this.addNewEmplyee.controls.allowanceTwo);
+    console.log(this.addNewEmplyee.controls.hourrate);
     if (this.addNewEmplyee.valid) {
       this.app.Spinner.show();
       this.employeeService.addNewEmployee(this.addNewEmplyee.value).subscribe((data: any) => {

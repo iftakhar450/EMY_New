@@ -9,8 +9,8 @@ export const environment = {
   attenedenceStatus: [{ id: 1, text: 'Present' }, { id: 2, text: 'Absent' },
   { id: 3, text: 'Leave' }, { id: 4, text: 'Weekend' }],
 
-  // baseUrl: 'http://inspire-builder.herokuapp.com',
-  baseUrl: 'http://localhost:3000',
+   baseUrl: 'http://inspire-builder.herokuapp.com',
+ // baseUrl: 'http://localhost:3000',
   loginApi: '/login',
   // employees
   addNewEmplyee: '/users/createNewUser',

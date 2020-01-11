@@ -77,13 +77,13 @@ export class AllprojectComponent implements OnInit {
   projectFilterOptionChange(args) {
     if (args.length > 0) {
       this.allProjects = _.filter(this.allProjectsSave, function (ele) {
-        console.log(ele.status);
-        return ele.status === args[0];
+       // console.log(ele.status);
+        return ele.status === args[0].name;
       });
     } else {
       this.allProjects = this.allProjectsSave;
     }
-
+      console.log(this.allProjects);
   }
 
 }

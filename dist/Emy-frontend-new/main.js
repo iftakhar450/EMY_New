@@ -5974,8 +5974,8 @@ var environment = {
         { id: 3, text: 'Completed' }, { id: 4, text: 'Maintenence Period' }, { id: 5, text: 'Handover Period' }],
     attenedenceStatus: [{ id: 1, text: 'Present' }, { id: 2, text: 'Absent' },
         { id: 3, text: 'Leave' }, { id: 4, text: 'Weekend' }],
-    // baseUrl: 'http://inspire-builder.herokuapp.com',
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://inspire-builder.herokuapp.com',
+    // baseUrl: 'http://localhost:3000',
     loginApi: '/login',
     // employees
     addNewEmplyee: '/users/createNewUser',

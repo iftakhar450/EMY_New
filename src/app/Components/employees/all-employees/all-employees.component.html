@@ -26,7 +26,7 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 subBody">
 
-      <table class="table table-striped" [mfData]="allEmployess" #mf="mfDataTable" [mfRowsOnPage]="20">
+      <table class="table table-striped" [mfData]="allEmployess | search :searchbyUsername" #mf="mfDataTable" [mfRowsOnPage]="20">
         <thead class="tablehead">
           <tr>
             <th class="empTableHead">
@@ -66,7 +66,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of mf.data | search :searchbyUsername">
+          <tr *ngFor="let item of mf.data">
             <td>{{item.name}}</td>
             <td>{{item.mobile}}</td>
             <td>{{item.profName}}</td>

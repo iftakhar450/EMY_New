@@ -31,7 +31,7 @@ module.exports = function apiRoutes() {
     api.getEmployeeDetail = function (req, res, next) {
         var sql = "SELECT SUM(CASE WHEN isactive = 'y' THEN 1 ELSE 0 END) AS active_users,\
                            SUM(CASE WHEN isactive = 'n' THEN 1 ELSE 0 END) AS deactive_users\
-                      FROM users;";
+                      FROM users where users.isdelete = 'n' ;";
         db.all(sql, function (err, rows) {
             if (err) {
                 console.log(err);
@@ -46,7 +46,7 @@ module.exports = function apiRoutes() {
        var empD = req.body.employeesDetail;
         var sql = " SELECT projects.status, COUNT(status) as count\
         FROM projects\
-        WHERE isactive = 'y'\
+        WHERE isactive = 'y' AND isdelete = 'n'\
         GROUP BY status";
         db.all(sql, function (err, rows) {
             if (err) {

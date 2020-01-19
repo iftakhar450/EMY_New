@@ -104,7 +104,7 @@ export class AllEmployeesComponent implements OnInit {
     if (args.length > 0) {
       this.allEmployess = _.filter(this.allEmployessSave, function (ele) {
         console.log(ele.profName);
-        return ele.profName === args[0];
+        return ele.profName === args[0].name;
       });
     } else {
       this.allEmployess = this.allEmployessSave;

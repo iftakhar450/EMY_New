@@ -128,10 +128,27 @@ module.exports = function apiRoutes(event) {
             return res.status(200).json({ msg: 'Project Update successfully' });
         });
     }
+    api.getUserforAttendence = function (req, res, next) {
+        var today = moment().format('YYYY-MM-DD');
+        console.log('user for today attendence'+ today);
+        var sql = `SELECT  u.rec_id,u.name, u.othername, u.supervisor_id\
+      FROM    users  as u WHERE   u.rec_id  NOT IN\
+      (SELECT  a.rec_id\
+      FROM    attendence  as a where a.added_date = ${today}) \
+       And u.isactive = "y" and \
+      isdelete = "n" AND isadmin = "n"`;
+
+        db.all(sql, function (err, rows) {
+            if (err) {
+                return next(err);
+            }
+            return res.send(rows);
+        });
+    }
     return api;
 }
 
 function mailSend() {
-    
+
 }
 

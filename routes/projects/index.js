@@ -54,7 +54,7 @@ module.exports = function apiRoutes(event) {
     router.post('/createProject', auth, projectController.createNewProject);
     router.post('/deleteProject', auth, projectController.deleteProject);
     router.post('/updateProject', auth, projectController.updateProject);
-    router.get('/getProjectsBySupervisor',projectController.selectSupervisor, projectController.getProjectsBySupervisor);
+    router.get('/getProjectsBySupervisor',auth,projectController.selectSupervisor, projectController.getProjectsBySupervisor);
 
     return router;
 }

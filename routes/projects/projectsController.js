@@ -16,6 +16,53 @@ module.exports = function apiRoutes(event) {
         });
 
     }
+    api.selectSupervisor = function (req, res, next) {
+        var sql = '';
+        if (req.query.id) {
+            sql = `SELECT rec_id,name, project_ids FROM users where isdelete = 'n' and isadmin='y' rec_id = ${req.query.id}`;
+            db.all(sql, function (err, rows) {
+                if (err) {
+                    req.log.error(err);
+                    return next(err);
+                }
+                console.log();
+                if (rows.length > 0) {
+                   // next();
+                   console.log(rows[0].project_ids)
+                   req.projects = rows[0].project_ids;
+                   next();
+                   // return res.send(rows);
+                } else {
+                    return res.status(201).send({ msg: 'no user founs with this id' });
+                }
+                
+            });
+        } else {
+            return res.status(401).send({ msg: 'id not found' });
+        }
+
+    }
+    api.getProjectsBySupervisor = function (req, res, next) {
+        var sql = '';
+        console.log(req.projects)
+        if(req.projects != 'null') {
+            sql = `SELECT * FROM projects where isdelete = 'n' and isactive = 'y' and rec_id In(${req.projects})`;
+
+       } else {
+            sql = "SELECT * FROM projects where isdelete = 'n' and isactive = 'y'";
+
+        }
+        console.log(sql)
+        db.all(sql, function (err, rows) {
+            if (err) {
+                req.log.error(err);
+                return next(err);
+            }
+            return res.send(rows);
+        });
+
+    }
+
     api.createNewProject = function (req, res, next) {
         var sdate = moment(req.body.startDate).format('YYYY-MM-DD');
         var edate = moment(req.body.endDate).format("YYYY-MM-DD");
@@ -63,13 +110,13 @@ module.exports = function apiRoutes(event) {
         var edate = moment(req.body.endDate).format("YYYY-MM-DD");
         var sql = '';
         if (req.body.extras) {
-             sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
-            ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
-            ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
-            ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '", `extras`= "'+req.body.extras+'"' +
-            'where rec_id=' + req.body.rec_id;
+            sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
+                ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
+                ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
+                ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '", `extras`= "' + req.body.extras + '"' +
+                'where rec_id=' + req.body.rec_id;
         } else {
-             sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
+            sql = 'UPDATE `projects` SET `sid` = "' + req.body.sid + '", `name` = "' + req.body.fullname + '" ' +
                 ', `status` = "' + req.body.status + '", `translation` = "' + req.body.othername + '" ' +
                 ', `area` = "' + req.body.area + '", `location` = "' + req.body.location + '" ' +
                 ', `startDate` = "' + sdate + '", `endDate` = "' + edate + '" ' +

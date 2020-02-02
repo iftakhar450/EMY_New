@@ -88,6 +88,8 @@ module.exports = function apiRoutes(event) {
         });
     }
     api.updateUser = function (req, res, next) {
+        console.log('-------------------');
+
         var sql = 'UPDATE `users` SET `eid` = "' + req.body.eid + '", `name` = "' + req.body.fullname + '" ' +
             ',`othername` = "' + req.body.othername + '" , `profession_id` = "' + req.body.profession + '"' +
             ', `department_id` = "' + req.body.department + '", `isadmin` = "' + req.body.isadmin + '" ' +
@@ -96,12 +98,12 @@ module.exports = function apiRoutes(event) {
             ', `isbouns_hour_apply` = "' + req.body.isBounsHourApplying + '", `basic_salary` = "' + req.body.bsalary + '"' +
             ', `per_hour_rate` = "' + req.body.hourrate + '", `allowance_one` = "' + req.body.allowanceOne + '"' +
             ', `allowance_two` = "' + req.body.allowanceTwo + '" , `project_ids` = "' + req.body.projects + '"';
-
         if (req.body.extras) {
             sql += ', `extras` = "' + req.body.extras + '"';
         }
         sql += 'where rec_id=' + req.body.rec_id;
-
+        console.log('-------------------');
+        console.log(sql)
         db.run(sql, function (err) {
             if (err) {
                 console.log(err);

@@ -19,16 +19,18 @@ module.exports = function apiRoutes(event) {
     api.selectSupervisor = function (req, res, next) {
         var sql = '';
         if (req.query.id) {
-            sql = `SELECT rec_id,name, project_ids FROM users where isdelete = 'n' and isadmin='y' rec_id = ${req.query.id}`;
+            sql = `SELECT rec_id,name, project_ids FROM users where isdelete = 'n' and isadmin='y' and rec_id = ${req.query.id}`;
             db.all(sql, function (err, rows) {
                 if (err) {
-                    req.log.error(err);
+                  //  req.log.error(err);
+                  console.log(err)
+
                     return next(err);
                 }
                 console.log();
                 if (rows.length > 0) {
                    // next();
-                   console.log(rows[0].project_ids)
+                 //  console.log(rows[0].project_ids)
                    req.projects = rows[0].project_ids;
                    next();
                    // return res.send(rows);

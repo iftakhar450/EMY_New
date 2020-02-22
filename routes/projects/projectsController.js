@@ -47,7 +47,7 @@ module.exports = function apiRoutes(event) {
     api.getProjectsBySupervisor = function (req, res, next) {
         var sql = '';
         console.log(req.projects)
-        if(req.projects != 'null') {
+        if(req.projects) {
             sql = `SELECT * FROM projects where isdelete = 'n' and isactive = 'y' and rec_id In(${req.projects})`;
 
        } else {

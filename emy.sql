@@ -75,7 +75,8 @@ CREATE TABLE `attendence` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`rec_id`),
-  UNIQUE KEY `rec_id` (`rec_id`)
+  UNIQUE KEY `rec_id` (`rec_id`),
+  UNIQUE KEY `atn` (`user_id`,`added_date`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --

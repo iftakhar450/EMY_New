@@ -19,16 +19,18 @@ module.exports = function apiRoutes(event) {
     api.selectSupervisor = function (req, res, next) {
         var sql = '';
         if (req.query.id) {
-            sql = `SELECT rec_id,name, project_ids FROM users where isdelete = 'n' and isadmin='y' rec_id = ${req.query.id}`;
+            sql = `SELECT rec_id,name, project_ids FROM users where isdelete = 'n' and isadmin='y' and rec_id = ${req.query.id}`;
             db.all(sql, function (err, rows) {
                 if (err) {
-                    req.log.error(err);
+                  //  req.log.error(err);
+                  console.log(err)
+
                     return next(err);
                 }
                 console.log();
                 if (rows.length > 0) {
                    // next();
-                   console.log(rows[0].project_ids)
+                 //  console.log(rows[0].project_ids)
                    req.projects = rows[0].project_ids;
                    next();
                    // return res.send(rows);
@@ -45,7 +47,7 @@ module.exports = function apiRoutes(event) {
     api.getProjectsBySupervisor = function (req, res, next) {
         var sql = '';
         console.log(req.projects)
-        if(req.projects != 'null') {
+        if(req.projects) {
             sql = `SELECT * FROM projects where isdelete = 'n' and isactive = 'y' and rec_id In(${req.projects})`;
 
        } else {

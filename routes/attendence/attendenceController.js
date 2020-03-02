@@ -99,6 +99,43 @@ module.exports = function apiRoutes(event) {
             return res.status(200).json({ msg: 'Attendence Add Successfully' });
         });
     }
+    api.createMutliUserAttendence = function (req, res, next) {
+        var adate = moment(req.body.date).format('YYYY-MM-DD');
+        // console.log(adate)
+     console.log(req.body.data);
+        var data = [];
+        for (i = 0; i < req.body.data.length; i++) {
+            var pid = null;
+            if (req.body.data[i].pid) {
+                pid = req.body.data[i].pid;
+            }
+            var wid = null;
+            if (req.body.data[i].wid) {
+                wid = req.body.data[i].wid;
+            }
+            var ele = `(${req.body.data[i].uid} ,${pid} ,${req.body.data[i].overtime},${req.body.data[i].added_by},${wid},${JSON.stringify(adate)},${JSON.stringify(req.body.data[i].status)})`;
+            data.push(ele);
+        }
+        // console.log(data);
+        var sql = 'INSERT IGNORE INTO attendence(`user_id`,`project_id`,`overtime`,`supervisor_id`,`work_id`,`added_date`, `status`) ' +
+            `VALUES ${data}`;
+
+        // console.log(sql);
+        //  return res.status(200).json({ msg: 'success' });
+        db.run(sql, data, function (err) {
+            if (err) {
+                if (err.sqlMessage) {
+                    console.log(err);
+                    return res.status(500).json({ msg: err.sqlMessage });
+                } else {
+                    return res.status(500).json({ error: err });
+                }
+            }
+            event.emit(allevents.departmentUpdate);
+            mailSend();
+            return res.status(200).json({ msg: 'Attendence Add Successfully' });
+        });
+    }
     api.deleteAttendence = function (req, res, next) {
         console.log(req.body.rec_id);
         var sql = "DELETE  from `attendence`  where rec_id=" + req.body.rec_id;
@@ -131,15 +168,17 @@ module.exports = function apiRoutes(event) {
         });
     }
     api.getUserforAttendence = function (req, res, next) {
-        var today = moment().format('YYYY-MM-DD');
-        console.log('user for today attendence'+ today);
+        var today = JSON.stringify(moment().format('YYYY-MM-DD'));
+        console.log('user for today attendence' + today);
         var sql = `SELECT  u.rec_id,u.name, u.othername, u.supervisor_id\
-      FROM    users  as u WHERE   u.rec_id  NOT IN\
-      (SELECT  a.rec_id\
+      FROM    users  as u WHERE   u.rec_id  NOT 
+      IN\
+      (SELECT   a.user_id\
       FROM    attendence  as a where a.added_date = ${today}) \
        And u.isactive = "y" and \
       isdelete = "n" AND isadmin = "n"`;
 
+      console.log(sql);
         db.all(sql, function (err, rows) {
             if (err) {
                 return next(err);

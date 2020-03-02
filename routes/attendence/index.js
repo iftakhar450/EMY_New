@@ -50,8 +50,8 @@ module.exports = function apiRoutes(event) {
         res.send('Attendence is working');
     });
     router.post('/getTodayAttendence', auth, attendenceController.getAttendenceBydate);
-
     router.post('/addAttendence', auth,attendenceController.checkattendenceExsist, attendenceController.createNewAttendence);
+    router.post('/addMutliUserAttendence',auth, attendenceController.createMutliUserAttendence);
     router.post('/deleteAttendence', auth, attendenceController.deleteAttendence);
     router.post('/updateAttendence', auth, attendenceController.updateAttendence);
     router.post('/fetchCardData', auth, attendenceController.getCardViewData);

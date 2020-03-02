@@ -8,6 +8,7 @@ import { DatepickerOptions } from 'ng2-datepicker';
 import * as frLocale from 'date-fns/locale/fr';
 import { environment } from './../../../../environments/environment';
 import { _ } from 'underscore';
+import * as moment from 'moment';
 @Component({
   selector: 'app-view-attendence',
   templateUrl: './view-attendence.component.html',
@@ -61,6 +62,9 @@ export class ViewAttendenceComponent implements OnInit {
     this.router.navigate(['/addAttendence']);
   }
   getAttendenceOfDay() {
+    console.log(this.selectedDate);
+    // this.selectedDate = moment(this.selectedDate).format('YYYY-MM-DD');
+    console.log(this.selectedDate);
     this.attendenceService.todayAttendence(this.selectedDate).subscribe((data: any) => {
       console.log(data);
       this.attendences = data;

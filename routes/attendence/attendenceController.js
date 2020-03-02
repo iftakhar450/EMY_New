@@ -8,7 +8,9 @@ const request = mailjet
 module.exports = function apiRoutes(event) {
     var api = {};
     api.getAttendenceBydate = function (req, res, next) {
-        var adate = moment(req.body.date).format('YYYY-MM-DD');
+       // var adate = moment(req.body.date).format('YYYY-MM-DD');
+        const sDate = moment(req.body.date).startOf('day').format('YYYY-MM-DD');
+        const eDate = moment(req.body.date).endOf('day').format('YYYY-MM-DD');
         var sql = "SELECT attendence.rec_id,attendence.overtime,attendence.status,attendence.added_date,\
        u1.name as name, u1.othername as othername, u2.name as supervisor, projects.name as project,projects.sid as projectId, worknatures.name as work\
         FROM attendence\
@@ -16,7 +18,7 @@ module.exports = function apiRoutes(event) {
         LEFT JOIN  users      AS u2    ON  attendence.supervisor_id = u2.rec_id \
         LEFT JOIN projects ON attendence.project_id = projects.rec_id\
         LEFT JOIN worknatures ON attendence.work_id = worknatures.rec_id\
-        where  `added_date`>= '"+ adate + "' AND `added_date` <= '" + adate + "'";
+        where  `added_date`>= '"+ sDate + "' AND `added_date` <= '" + eDate + "'";
 
         // sql = "SELECT * FROM attendence ;
         db.all(sql, function (err, rows) {
